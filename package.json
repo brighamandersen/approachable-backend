@@ -1,0 +1,24 @@
+{
+  "name": "approachable-backend",
+  "version": "1.0.0",
+  "description": "Project for Brigham Andersen and Taylor English",
+  "main": "server.js",
+  "scripts": {
+    "start": "ts-node src/server.ts",
+    "dev": "nodemon src/server.ts",
+    "build": "npx tsc"
+  },
+  "author": "Brigham Andersen",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "nodemon": "^3.0.3",
+    "prisma": "^5.8.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "sqlite3": "^5.1.7"
+  }
+}
