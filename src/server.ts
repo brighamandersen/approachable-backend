@@ -1,21 +1,8 @@
 import express, { Request, Response } from 'express';
+import { UserLocation } from './models';
 
 const app = express();
 const PORT = 3000;
-
-interface User {
-  id: number;
-  firstName: string;
-  lastName: string;
-  // email: string;
-  // password: string;
-}
-
-interface UserLocation {
-  userId: number;
-  latitude: number;
-  longitude: number;
-}
 
 app.get('/', async (req: Request, res: Response) => {
   res.send('Hello world');
