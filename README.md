@@ -7,4 +7,4 @@ See [approachable-frontend](https://github.com/janksmap/approachable-frontend) r
 
 ## TODO
 
-- [ ] Create post location endpoint
+- Create post location endpoint
