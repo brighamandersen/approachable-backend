@@ -16,3 +16,5 @@ npm run dev
 ## TODO
 
 - Create post location endpoint
+- Eventually
+  - Back up database
