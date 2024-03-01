@@ -12,6 +12,8 @@ app.get('/', (req: Request, res: Response) => {
   res.send('Welcome to the Approachable API!');
 });
 
+// User endpoints
+
 app.get('/users/:id', (req: Request, res: Response<User | string>) => {
   const userId = req.params.id;
 
@@ -31,8 +33,10 @@ app.get('/users/:id', (req: Request, res: Response<User | string>) => {
   });
 });
 
+// User location endpoints
+
 app.get(
-  '/get-user-locations',
+  '/user-locations',
   (_req: Request, res: Response<UserLocation[] | string>) => {
     db.all(
       'SELECT * FROM UserLocation',
@@ -44,6 +48,32 @@ app.get(
         }
 
         res.send(userLocations);
+      }
+    );
+  }
+);
+
+app.get(
+  '/user-locations/:userId',
+  (req: Request, res: Response<UserLocation | string>) => {
+    const userId = req.params.userId;
+
+    db.get(
+      'SELECT * FROM UserLocation WHERE userId = ?',
+      [userId],
+      (err, userLocation: UserLocation) => {
+        if (err) {
+          console.error('Error executing query:', err);
+          res.status(500).send('Internal Server Error');
+          return;
+        }
+
+        if (!userLocation) {
+          res.status(404).send('User location not found');
+          return;
+        }
+
+        res.send(userLocation);
       }
     );
   }
