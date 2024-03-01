@@ -12,3 +12,7 @@ touch db.sqlite3
 npm run create-tables
 npm run dev
 ```
+
+## TODO
+
+- Create post location endpoint
