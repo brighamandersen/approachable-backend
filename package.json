@@ -6,10 +6,10 @@
   "scripts": {
     "start": "ts-node src/server.ts",
     "dev": "nodemon src/server.ts",
+    "create-tables": "sqlite3 db.sqlite3 < create_tables.sql",
     "build": "npx tsc"
   },
   "author": "Brigham Andersen",
-  "license": "ISC",
   "devDependencies": {
     "@types/express": "^4.17.21",
     "nodemon": "^3.0.3",
