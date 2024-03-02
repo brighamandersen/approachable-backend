@@ -77,6 +77,27 @@ app.get(
   }
 );
 
+app.delete(
+  '/users/:id',
+  (req: Request<{ id: string }>, res: Response<string>) => {
+    const userId = req.params.id;
+
+    db.run('DELETE FROM User WHERE id = ?', [userId], function (err) {
+      if (err) {
+        console.error('Error executing query:', err);
+        return res.status(500).send('Internal Server Error');
+      }
+
+      const noRowsAffected = this.changes === 0;
+      if (noRowsAffected) {
+        return res.status(404).send('User not found');
+      }
+
+      res.status(204).send(); // No content (user was deleted)
+    });
+  }
+);
+
 // User location endpoints
 
 app.post(
@@ -170,6 +191,27 @@ app.get(
         res.send(userLocation);
       }
     );
+  }
+);
+
+app.delete(
+  '/user-locations/:userId',
+  (req: Request<{ id: string }>, res: Response<string>) => {
+    const userId = req.params.id;
+
+    db.run('DELETE FROM User WHERE id = ?', [userId], function (err) {
+      if (err) {
+        console.error('Error executing query:', err);
+        return res.status(500).send('Internal Server Error');
+      }
+
+      const noRowsAffected = this.changes === 0;
+      if (noRowsAffected) {
+        return res.status(404).send('User not found');
+      }
+
+      res.status(204).send(); // No content (user was deleted)
+    });
   }
 );
 
