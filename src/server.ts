@@ -37,10 +37,9 @@ app.post(
           return;
         }
 
-        const userId = this.lastID; // this.lastID is a special property for the last inserted row id
         db.get(
           'SELECT * FROM User WHERE id = ?',
-          [userId],
+          [this.lastID], // this.lastID is a special property for the last inserted row id
           (err, user: User) => {
             if (err) {
               console.error('Error executing query:', err);
@@ -54,6 +53,18 @@ app.post(
     );
   }
 );
+
+app.get('/users', (_req: Request, res: Response<User[] | string>) => {
+  db.all('SELECT * FROM User', (err, users: User[]) => {
+    if (err) {
+      console.error('Error executing query:', err);
+      res.status(500).send('Internal Server Error');
+      return;
+    }
+
+    res.send(users);
+  });
+});
 
 app.get(
   '/users/:id',
