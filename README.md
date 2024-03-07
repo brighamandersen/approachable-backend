@@ -17,27 +17,29 @@ npm run dev
 
 ### Users
 
-#### Create a user
+Create a user
 
+```
 curl -X POST -H "Content-Type: application/json" -d '{"firstName": "New", "lastName": "User"}' http://localhost:3000/users
+```
 
-#### Get all users
+Get all users
 
 ```
 curl http://localhost:3000/users
 ```
 
-#### Get user by id
+Get user by id
 
 ```
 curl http://localhost:3000/users/123
 ```
 
-#### Update a user by id
+Update a user by id
 
-FIXME: Not done yet
+> FIXME: Not done yet
 
-#### Delete user by id
+Delete user by id
 
 ```
 curl -X DELETE http://localhost:3000/users/123
@@ -45,29 +47,29 @@ curl -X DELETE http://localhost:3000/users/123
 
 ### User Locations
 
-#### Create a user location
+Create a user location
 
 ```
 curl -X POST -H "Content-Type: application/json" -d '{"userId": 123, "latitude": 40.7128, "longitude": -74.006}' http://localhost:3000/user-locations
 ```
 
-#### Get all user locations
+Get all user locations
 
 ```
 curl http://localhost:3000/user-locations
 ```
 
-#### Get user location by user id
+Get user location by user id
 
 ```
 curl http://localhost:3000/user-locations/123
 ```
 
-#### Update a user location by user id
+Update a user location by user id
 
-FIXME: Not done yet
+> FIXME: Not done yet
 
-#### Delete user location by user id
+Delete user location by user id
 
 ```
 curl -X DELETE http://localhost:3000/user-locations/123
