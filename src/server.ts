@@ -12,8 +12,12 @@ app.get('/', (_req: Request, res: Response) => {
   res.send('Welcome to the Approachable API!');
 });
 
-// User endpoints
-
+/**
+ * Create a new user
+ *
+ * Example request:
+ * curl -X POST -H "Content-Type: application/json" -d '{"firstName": "New", "lastName": "User"}' http://localhost:3000/users
+ */
 app.post(
   '/users',
   (
@@ -54,6 +58,12 @@ app.post(
   }
 );
 
+/**
+ * Get all users
+ *
+ * Example request:
+ * curl http://localhost:3000/users
+ */
 app.get('/users', (_req: Request, res: Response<User[] | string>) => {
   db.all('SELECT * FROM User', (err, users: User[]) => {
     if (err) {
@@ -66,6 +76,12 @@ app.get('/users', (_req: Request, res: Response<User[] | string>) => {
   });
 });
 
+/**
+ * Get user by id
+ *
+ * Example request:
+ * curl http://localhost:3000/users/123
+ */
 app.get(
   '/users/:id',
   (req: Request<{ id: string }>, res: Response<User | string>) => {
@@ -88,6 +104,23 @@ app.get(
   }
 );
 
+/**
+ * Update a user by id
+ *
+ * Example request:
+ * TODO: Add curl example here
+ */
+app.put('/users:id', (req, res) => {
+  // TODO: Implement this endpoint
+  res.status(501).send('Not Implemented');
+});
+
+/**
+ * Delete user by id
+ *
+ * Example request:
+ * curl -X DELETE http://localhost:3000/users/123
+ */
 app.delete(
   '/users/:id',
   (req: Request<{ id: string }>, res: Response<string>) => {
@@ -111,6 +144,12 @@ app.delete(
 
 // User location endpoints
 
+/**
+ * Create a user location
+ *
+ * Example request:
+ * curl -X POST -H "Content-Type: application/json" -d '{"userId": 123, "latitude": 40.7128, "longitude": -74.006}' http://localhost:3000/user-locations
+ */
 app.post(
   '/user-locations',
   (
@@ -161,6 +200,12 @@ app.post(
   }
 );
 
+/**
+ * Get all user locations
+ *
+ * Example request:
+ * curl http://localhost:3000/user-locations
+ */
 app.get(
   '/user-locations',
   (_req: Request, res: Response<UserLocation[] | string>) => {
@@ -179,6 +224,12 @@ app.get(
   }
 );
 
+/**
+ * Get user location by user id
+ *
+ * Example request:
+ * curl http://localhost:3000/user-locations/123
+ */
 app.get(
   '/user-locations/:userId',
   (req: Request<{ userId: string }>, res: Response<UserLocation | string>) => {
@@ -205,6 +256,23 @@ app.get(
   }
 );
 
+/**
+ * Update user location by id
+ *
+ * Example request:
+ * TODO: Add curl example here
+ */
+app.put('/user-locations:id', (req, res) => {
+  // TODO: Implement this endpoint
+  res.status(501).send('Not Implemented');
+});
+
+/**
+ * Delete user location by user id
+ *
+ * Example request:
+ * curl -X DELETE http://localhost:3000/user-locations/123
+ */
 app.delete(
   '/user-locations/:userId',
   (req: Request<{ userId: string }>, res: Response<string>) => {
