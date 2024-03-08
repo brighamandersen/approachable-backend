@@ -75,6 +75,10 @@ Delete user location by user id
 curl -X DELETE http://localhost:3000/user-locations/123
 ```
 
+## Decisions
+
+- 03/07/24 - I was considering using Swagger for API documentation but decided that this project is small-scale enough that it would slow us down more than it would help. Instead I'm just putting API usage examples with curl in comments above each API endpoint.
+
 ## TODO
 
 - Finish update endpoints
