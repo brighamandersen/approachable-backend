@@ -1,0 +1,2 @@
+INSERT INTO User (firstName, lastName, latitude, longitude) VALUES ('Taylor', 'English', 40.0, 50.0);
+INSERT INTO User (firstName, lastName, latitude, longitude) VALUES ('Brigham', 'Andersen', 80.0, 90.0);

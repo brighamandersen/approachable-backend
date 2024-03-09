@@ -6,14 +6,16 @@
   "scripts": {
     "start": "ts-node src/server.ts",
     "dev": "nodemon src/server.ts",
-    "create-tables": "sqlite3 db.sqlite3 < create_tables.sql",
+    "create-tables": "sqlite3 db.sqlite3 < scripts/create_tables.sql",
+    "fill-tables": "sqlite3 db.sqlite3 < scripts/fill_tables.sql",
+    "db-cli": "sqlite3 db.sqlite3",
+    "db-gui": "open db.sqlite3",
     "build": "npx tsc"
   },
   "author": "Brigham Andersen",
   "devDependencies": {
     "@types/express": "^4.17.21",
     "nodemon": "^3.0.3",
-    "prisma": "^5.8.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.3.3"
   },

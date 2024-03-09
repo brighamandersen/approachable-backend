@@ -12,6 +12,10 @@ app.get('/', (_req: Request, res: Response) => {
   res.send('Welcome to the Approachable API!');
 });
 
+app.get('/users-in-radius', (req, res) => {
+  // Args: Latitude, longitude, radius
+});
+
 /**
  * Create a new user
  *
