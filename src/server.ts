@@ -1,43 +1,43 @@
 import express, { Request, Response } from 'express';
-import sqlite3 from 'sqlite3';
-import { User, UserLocation } from './models';
+import db from './db';
+import { User } from './models';
 
 const app = express();
 app.use(express.json());
 const PORT = process.env.PORT || 3000;
 
-const db = new sqlite3.Database('db.sqlite3');
-
 app.get('/', (_req: Request, res: Response) => {
   res.send('Welcome to the Approachable API!');
 });
 
-app.get('/users-in-radius', (req, res) => {
-  // Args: Latitude, longitude, radius
-});
-
 /**
- * Create a new user
- *
- * Example request:
- * curl -X POST -H "Content-Type: application/json" -d '{"firstName": "New", "lastName": "User"}' http://localhost:3000/users
+ * Create a user
  */
 app.post(
   '/users',
   (
-    req: Request<{}, {}, { firstName: string; lastName: string }>,
+    req: Request<
+      {},
+      {},
+      {
+        firstName: string;
+        lastName: string;
+        latitude: number;
+        longitude: number;
+      }
+    >,
     res: Response<User | string>
   ) => {
-    const { firstName, lastName } = req.body;
+    const { firstName, lastName, latitude, longitude } = req.body;
 
-    if (!firstName || !lastName) {
+    if (!firstName || !lastName || !latitude || !longitude) {
       res.status(400).send('Invalid request body');
       return;
     }
 
     db.run(
-      'INSERT INTO User (firstName, lastName) VALUES (?, ?)',
-      [firstName, lastName],
+      'INSERT INTO User (firstName, lastName, latitude, longitude) VALUES (?, ?, ?, ?)',
+      [firstName, lastName, latitude, longitude],
       function (err) {
         if (err) {
           console.error('Error executing query:', err);
@@ -64,9 +64,6 @@ app.post(
 
 /**
  * Get all users
- *
- * Example request:
- * curl http://localhost:3000/users
  */
 app.get('/users', (_req: Request, res: Response<User[] | string>) => {
   db.all('SELECT * FROM User', (err, users: User[]) => {
@@ -80,11 +77,12 @@ app.get('/users', (_req: Request, res: Response<User[] | string>) => {
   });
 });
 
+// app.get('/users-in-radius', (req, res) => {
+//   // Args: Latitude, longitude, radius
+// });
+
 /**
  * Get user by id
- *
- * Example request:
- * curl http://localhost:3000/users/123
  */
 app.get(
   '/users/:id',
@@ -110,20 +108,69 @@ app.get(
 
 /**
  * Update a user by id
- *
- * Example request:
- * TODO: Add curl example here
  */
-app.put('/users:id', (req, res) => {
-  // TODO: Implement this endpoint
-  res.status(501).send('Not Implemented');
-});
+app.put(
+  '/users:id',
+  (
+    req: Request<{ id: string }, {}, Partial<User>>,
+    res: Response<User | string>
+  ) => {
+    const userId = req.params.id;
+    const { firstName, lastName, latitude, longitude } = req.body;
+
+    if (!firstName && !lastName && !latitude && !longitude) {
+      res.status(400).send('Invalid request body');
+      return;
+    }
+
+    const queryParams: any[] = [];
+    let query = 'UPDATE User SET ';
+    if (firstName) {
+      query += 'firstName = ?, ';
+      queryParams.push(firstName);
+    }
+    if (lastName) {
+      query += 'lastName = ?, ';
+      queryParams.push(lastName);
+    }
+    if (latitude !== undefined) {
+      query += 'latitude = ?, locationLastUpdated = ?, ';
+      queryParams.push(latitude, Date.now());
+    }
+    if (longitude !== undefined) {
+      query += 'longitude = ?, locationLastUpdated = ?, ';
+      queryParams.push(longitude, Date.now());
+    }
+    // Remove trailing comma and space
+    query = query.slice(0, -2);
+    query += ' WHERE id = ?';
+    queryParams.push(userId);
+
+    db.run(query, queryParams, function (err) {
+      if (err) {
+        console.error('Error executing query:', err);
+        return res.status(500).send('Internal Server Error');
+      }
+
+      const noRowsAffected = this.changes === 0;
+      if (noRowsAffected) {
+        return res.status(404).send('User not found');
+      }
+
+      db.get('SELECT * FROM User WHERE id = ?', [userId], (err, user: User) => {
+        if (err) {
+          console.error('Error executing query:', err);
+          res.status(500).send('Internal Server Error');
+          return;
+        }
+        res.send(user);
+      });
+    });
+  }
+);
 
 /**
  * Delete user by id
- *
- * Example request:
- * curl -X DELETE http://localhost:3000/users/123
  */
 app.delete(
   '/users/:id',
@@ -143,162 +190,6 @@ app.delete(
 
       res.status(204).send(); // No content (user was deleted)
     });
-  }
-);
-
-// User location endpoints
-
-/**
- * Create a user location
- *
- * Example request:
- * curl -X POST -H "Content-Type: application/json" -d '{"userId": 123, "latitude": 40.7128, "longitude": -74.006}' http://localhost:3000/user-locations
- */
-app.post(
-  '/user-locations',
-  (
-    req: Request<{}, {}, UserLocation>,
-    res: Response<UserLocation | string>
-  ) => {
-    const newUserLocation: UserLocation = req.body;
-
-    if (
-      !newUserLocation ||
-      !newUserLocation.userId ||
-      !newUserLocation.latitude ||
-      !newUserLocation.longitude
-    ) {
-      res.status(400).send('Invalid request body');
-      return;
-    }
-
-    db.run(
-      'INSERT INTO UserLocation (userId, latitude, longitude) VALUES (?, ?, ?)',
-      [
-        newUserLocation.userId,
-        newUserLocation.latitude,
-        newUserLocation.longitude
-      ],
-      (err) => {
-        if (err) {
-          console.error('Error executing query:', err);
-          res.status(500).send('Internal Server Error');
-          return;
-        }
-
-        db.get(
-          'SELECT * FROM UserLocation WHERE userId = ?',
-          [newUserLocation.userId],
-          (err, userLocation: UserLocation) => {
-            if (err) {
-              console.error('Error executing query:', err);
-              res.status(500).send('Internal Server Error');
-              return;
-            }
-
-            res.status(201).send(userLocation);
-          }
-        );
-      }
-    );
-  }
-);
-
-/**
- * Get all user locations
- *
- * Example request:
- * curl http://localhost:3000/user-locations
- */
-app.get(
-  '/user-locations',
-  (_req: Request, res: Response<UserLocation[] | string>) => {
-    db.all(
-      'SELECT * FROM UserLocation',
-      (err, userLocations: UserLocation[]) => {
-        if (err) {
-          console.error('Error executing query:', err);
-          res.status(500).send('Internal Server Error');
-          return;
-        }
-
-        res.send(userLocations);
-      }
-    );
-  }
-);
-
-/**
- * Get user location by user id
- *
- * Example request:
- * curl http://localhost:3000/user-locations/123
- */
-app.get(
-  '/user-locations/:userId',
-  (req: Request<{ userId: string }>, res: Response<UserLocation | string>) => {
-    const userId = req.params.userId;
-
-    db.get(
-      'SELECT * FROM UserLocation WHERE userId = ?',
-      [userId],
-      (err, userLocation: UserLocation) => {
-        if (err) {
-          console.error('Error executing query:', err);
-          res.status(500).send('Internal Server Error');
-          return;
-        }
-
-        if (!userLocation) {
-          res.status(404).send('User location not found');
-          return;
-        }
-
-        res.send(userLocation);
-      }
-    );
-  }
-);
-
-/**
- * Update user location by id
- *
- * Example request:
- * TODO: Add curl example here
- */
-app.put('/user-locations:id', (req, res) => {
-  // TODO: Implement this endpoint
-  res.status(501).send('Not Implemented');
-});
-
-/**
- * Delete user location by user id
- *
- * Example request:
- * curl -X DELETE http://localhost:3000/user-locations/123
- */
-app.delete(
-  '/user-locations/:userId',
-  (req: Request<{ userId: string }>, res: Response<string>) => {
-    const userId = req.params.userId;
-
-    db.run(
-      'DELETE FROM UserLocation WHERE userId = ?',
-      [userId],
-      function (err) {
-        if (err) {
-          console.error('Error executing query:', err);
-          return res.status(500).send('Internal Server Error');
-        }
-
-        const noRowsAffected = this.changes === 0;
-        if (noRowsAffected) {
-          return res.status(404).send('User not found');
-        }
-
-        res.status(204).send(); // No content (user was deleted)
-      }
-    );
   }
 );
 
