@@ -13,6 +13,44 @@ npm run create-tables
 npm run dev
 ```
 
+## API Usage
+
+Create a user
+
+```
+curl -X POST
+-H "Content-Type: application/json"
+-d '{"firstName": "New", "lastName": "User", "latitude": 40.5, "longitude": 75.0}'
+http://localhost:3000/users
+```
+
+Get all users
+
+```
+curl http://localhost:3000/users
+```
+
+Get user by id
+
+```
+curl http://localhost:3000/users/123
+```
+
+Update a user by id
+
+```
+curl -X PUT
+-H "Content-Type: application/json"
+-d '{"firstName": "New", "lastName": "User", "latitude": 40.5, "longitude": 75.0}'
+http://localhost:3000/users
+```
+
+Delete user by id
+
+```
+curl -X DELETE http://localhost:3000/users/123
+```
+
 ## Decisions
 
 - 03/07/24 - I was considering using Swagger for API documentation but decided that this project is small-scale enough that it would slow us down more than it would help. Instead I'm just putting API usage examples with curl in comments above each API endpoint.
