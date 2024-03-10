@@ -1,10 +1,12 @@
 import express, { Request, Response } from 'express';
-import db from './db';
-import { User } from './models';
+import { PrismaClient, User } from '@prisma/client';
+// import { User } from './types';
+import { getCurrentTimestamp, getUsersWithinSquareFootDistance } from './utils';
 
 const app = express();
 app.use(express.json());
 const PORT = process.env.PORT || 3000;
+const prisma = new PrismaClient();
 
 app.get('/', (_req: Request, res: Response) => {
   res.send('Welcome to the Approachable API!');
@@ -15,7 +17,7 @@ app.get('/', (_req: Request, res: Response) => {
  */
 app.post(
   '/users',
-  (
+  async (
     req: Request<
       {},
       {},
@@ -35,66 +37,52 @@ app.post(
       return;
     }
 
-    db.run(
-      'INSERT INTO User (firstName, lastName, latitude, longitude) VALUES (?, ?, ?, ?)',
-      [firstName, lastName, latitude, longitude],
-      function (err) {
-        if (err) {
-          console.error('Error executing query:', err);
-          res.status(500).send('Internal Server Error');
-          return;
+    try {
+      const createdUser = await prisma.user.create({
+        data: {
+          firstName,
+          lastName,
+          latitude,
+          longitude,
+          locationLastUpdated: getCurrentTimestamp()
         }
+      });
 
-        db.get(
-          'SELECT * FROM User WHERE id = ?',
-          [this.lastID], // this.lastID is a special property for the last inserted row id
-          (err, user: User) => {
-            if (err) {
-              console.error('Error executing query:', err);
-              res.status(500).send('Internal Server Error');
-              return;
-            }
-            res.status(201).send(user);
-          }
-        );
-      }
-    );
+      res.status(201).send(createdUser);
+    } catch (error) {
+      console.error('Error creating user:', error);
+      res.status(500).send('Internal Server Error');
+    }
   }
 );
 
 /**
  * Get all users
  */
-app.get('/users', (_req: Request, res: Response<User[] | string>) => {
-  db.all('SELECT * FROM User', (err, users: User[]) => {
-    if (err) {
-      console.error('Error executing query:', err);
-      res.status(500).send('Internal Server Error');
-      return;
-    }
-
+app.get('/users', async (_req: Request, res: Response<User[] | string>) => {
+  try {
+    const users = await prisma.user.findMany();
     res.send(users);
-  });
+  } catch (error) {
+    console.error('Error executing query:', error);
+    res.status(500).send('Internal Server Error');
+  }
 });
-
-// app.get('/users-in-radius', (req, res) => {
-//   // Args: Latitude, longitude, radius
-// });
 
 /**
  * Get user by id
  */
 app.get(
   '/users/:id',
-  (req: Request<{ id: string }>, res: Response<User | string>) => {
-    const userId = req.params.id;
+  async (req: Request<{ id: string }>, res: Response<User | string>) => {
+    const userId = parseInt(req.params.id);
 
-    db.get('SELECT * FROM USER where id = ?', [userId], (err, user: User) => {
-      if (err) {
-        console.error('Error executing query:', err);
-        res.status(500).send('Internal Server Error');
-        return;
-      }
+    try {
+      const user = await prisma.user.findUnique({
+        where: {
+          id: userId
+        }
+      });
 
       if (!user) {
         res.status(404).send('User not found');
@@ -102,7 +90,10 @@ app.get(
       }
 
       res.send(user);
-    });
+    } catch (error) {
+      console.error('Error fetching user:', error);
+      res.status(500).send('Internal Server Error');
+    }
   }
 );
 
@@ -111,11 +102,11 @@ app.get(
  */
 app.put(
   '/users:id',
-  (
+  async (
     req: Request<{ id: string }, {}, Partial<User>>,
     res: Response<User | string>
   ) => {
-    const userId = req.params.id;
+    const userId = parseInt(req.params.id);
     const { firstName, lastName, latitude, longitude } = req.body;
 
     if (!firstName && !lastName && !latitude && !longitude) {
@@ -123,49 +114,36 @@ app.put(
       return;
     }
 
-    const queryParams: any[] = [];
-    let query = 'UPDATE User SET ';
-    if (firstName) {
-      query += 'firstName = ?, ';
-      queryParams.push(firstName);
-    }
-    if (lastName) {
-      query += 'lastName = ?, ';
-      queryParams.push(lastName);
-    }
-    if (latitude !== undefined) {
-      query += 'latitude = ?, locationLastUpdated = ?, ';
-      queryParams.push(latitude, Date.now());
-    }
-    if (longitude !== undefined) {
-      query += 'longitude = ?, locationLastUpdated = ?, ';
-      queryParams.push(longitude, Date.now());
-    }
-    // Remove trailing comma and space
-    query = query.slice(0, -2);
-    query += ' WHERE id = ?';
-    queryParams.push(userId);
-
-    db.run(query, queryParams, function (err) {
-      if (err) {
-        console.error('Error executing query:', err);
-        return res.status(500).send('Internal Server Error');
-      }
-
-      const noRowsAffected = this.changes === 0;
-      if (noRowsAffected) {
-        return res.status(404).send('User not found');
-      }
-
-      db.get('SELECT * FROM User WHERE id = ?', [userId], (err, user: User) => {
-        if (err) {
-          console.error('Error executing query:', err);
-          res.status(500).send('Internal Server Error');
-          return;
+    const didUpdateLocation = latitude || longitude;
+    console.log({ didUpdateLocation });
+    try {
+      const updatedUser = await prisma.user.update({
+        where: {
+          id: userId
+        },
+        data: {
+          firstName,
+          lastName,
+          latitude,
+          longitude,
+          locationLastUpdated: didUpdateLocation
+            ? getCurrentTimestamp()
+            : undefined
         }
-        res.send(user);
       });
-    });
+
+      console.log({ updatedUser });
+
+      if (!updatedUser) {
+        res.status(404).send('User not found');
+        return;
+      }
+
+      res.send(updatedUser);
+    } catch (error) {
+      console.error('Error updating user:', error);
+      res.status(500).send('Internal Server Error');
+    }
   }
 );
 
@@ -174,22 +152,26 @@ app.put(
  */
 app.delete(
   '/users/:id',
-  (req: Request<{ id: string }>, res: Response<string>) => {
-    const userId = req.params.id;
+  async (req: Request<{ id: string }>, res: Response<string>) => {
+    const userId = parseInt(req.params.id);
 
-    db.run('DELETE FROM User WHERE id = ?', [userId], function (err) {
-      if (err) {
-        console.error('Error executing query:', err);
-        return res.status(500).send('Internal Server Error');
-      }
+    try {
+      const deletedUser = await prisma.user.delete({
+        where: {
+          id: userId
+        }
+      });
 
-      const noRowsAffected = this.changes === 0;
-      if (noRowsAffected) {
-        return res.status(404).send('User not found');
+      if (!deletedUser) {
+        res.status(404).send('User not found');
+        return;
       }
 
       res.status(204).send(); // No content (user was deleted)
-    });
+    } catch (error) {
+      console.error('Error deleting user:', error);
+      res.status(500).send('Internal Server Error');
+    }
   }
 );
 

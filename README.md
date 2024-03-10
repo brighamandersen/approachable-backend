@@ -8,8 +8,7 @@ See [approachable-frontend](https://github.com/janksmap/approachable-frontend) r
 
 ```
 npm i
-touch db.sqlite3
-npm run create-tables
+npm run db-init
 npm run dev
 ```
 
@@ -18,10 +17,7 @@ npm run dev
 Create a user
 
 ```
-curl -X POST
--H "Content-Type: application/json"
--d '{"firstName": "New", "lastName": "User", "latitude": 40.5, "longitude": 75.0}'
-http://localhost:3000/users
+curl -X POST -H "Content-Type: application/json" -d '{"firstName": "New", "lastName": "User", "latitude": 40.5, "longitude": 75.0}' http://localhost:3000/users
 ```
 
 Get all users
@@ -39,10 +35,7 @@ curl http://localhost:3000/users/123
 Update a user by id
 
 ```
-curl -X PUT
--H "Content-Type: application/json"
--d '{"firstName": "New", "lastName": "User", "latitude": 40.5, "longitude": 75.0}'
-http://localhost:3000/users
+curl -X PUT -H "Content-Type: application/json" -d '{"firstName": "New", "lastName": "User", "latitude": 40.5, "longitude": 75.0}' http://localhost:3000/users/123
 ```
 
 Delete user by id
