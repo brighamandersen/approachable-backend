@@ -1,7 +1,6 @@
 {
   "apps": {
     "name": "approachable-api",
-    "script": "dist/server.js",
-    "output": "pm2.log"
+    "script": "dist/server.js"
   }
 }
