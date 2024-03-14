@@ -12,7 +12,7 @@
     "db-cli": "sqlite3 db.sqlite3",
     "db-gui": "open db.sqlite3",
     "build": "npx tsc",
-    "forever": "forever start dist/server.js"
+    "deploy": "pm2 start pm2.json"
   },
   "author": "Brigham Andersen",
   "devDependencies": {
