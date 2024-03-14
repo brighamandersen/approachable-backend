@@ -14,10 +14,15 @@ npm run dev
 
 ## API Usage
 
+> This shows how to make requests to the production endpoint at `https://approachable-api.brighambandersen.com`. You can test endpoints in development by replacing the production URL with `http://localhost:{PORT}`.
+
 Create a user
 
 ```
-curl -X POST -H "Content-Type: application/json" -d '{"firstName": "New", "lastName": "User", "latitude": 40.5, "longitude": 75.0}' http://localhost:3000/users
+curl -X POST \
+-H "Content-Type: application/json" \
+-d '{"firstName": "New", "lastName": "User", "bio": "I love coding", "latitude": 40.5, "longitude": 75.0}' \
+http://localhost:3000/users
 ```
 
 Get all users
@@ -41,7 +46,10 @@ curl http://localhost:3000/users/123
 Update a user by id
 
 ```
-curl -X PUT -H "Content-Type: application/json" -d '{"firstName": "New", "lastName": "User", "latitude": 40.5, "longitude": 75.0}' http://localhost:3000/users/123
+curl -X PUT \
+-H "Content-Type: application/json" \
+-d '{"firstName": "New", "lastName": "User", "bio": "I love coding", "latitude": 40.5, "longitude": 75.0}' \
+http://localhost:3000/users/123
 ```
 
 Delete user by id

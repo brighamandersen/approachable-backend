@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
-import { PrismaClient, User } from '@prisma/client';
-// import { User } from './types'; FIXME: Which User type should be used?
+import { PrismaClient } from '@prisma/client';
+import { User } from './types';
 import { getCurrentTimestamp, getUsersWithinRadius } from './utils';
 import { Feet } from './types';
 
@@ -155,21 +155,21 @@ app.get(
  * Update a user by id
  */
 app.put(
-  '/users:id',
+  '/users/:id',
   async (
     req: Request<{ id: string }, {}, Partial<User>>,
     res: Response<User | string>
   ) => {
     const userId = parseInt(req.params.id);
-    const { firstName, lastName, latitude, longitude } = req.body;
+    const { firstName, lastName, bio, latitude, longitude } = req.body;
 
-    if (!firstName && !lastName && !latitude && !longitude) {
+    if (!firstName && !lastName && !bio && !latitude && !longitude) {
       res.status(400).send('Invalid request body');
       return;
     }
 
     const didUpdateLocation = latitude || longitude;
-    console.log({ didUpdateLocation });
+
     try {
       const updatedUser = await prisma.user.update({
         where: {
@@ -178,6 +178,7 @@ app.put(
         data: {
           firstName,
           lastName,
+          bio,
           latitude,
           longitude,
           locationLastUpdated: didUpdateLocation
@@ -185,8 +186,6 @@ app.put(
             : undefined
         }
       });
-
-      console.log({ updatedUser });
 
       if (!updatedUser) {
         res.status(404).send('User not found');
