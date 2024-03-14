@@ -14,6 +14,15 @@ npm run dev
 
 ## Deployment Process
 
+First time
+
+```
+npm i
+npm run db-init
+```
+
+Future builds
+
 ```
 npm run build
 npm run forever
