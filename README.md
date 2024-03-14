@@ -26,10 +26,10 @@ Get all users
 curl http://localhost:3000/users
 ```
 
-Get users within a certain radius in feet
+Get users nearby a certain user (within a certain radius in feet)
 
 ```
-curl http://localhost:3000/users/nearby?latitude=38.90343&longitude=-77.0541&radiusInFeet=400
+curl 'http://localhost:3000/users/nearby?userId=123&radiusInFeet=400'
 ```
 
 Get user by id

@@ -29,7 +29,7 @@ export function calculateDistanceBetweenCoordinates(
 }
 
 export function getUsersWithinRadius(
-  allUsers: User[],
+  users: User[],
   latitude: number,
   longitude: number,
   radiusInFeet: Feet
@@ -37,7 +37,7 @@ export function getUsersWithinRadius(
   const usersWithinRadius: User[] = [];
 
   // Iterate through each user and check if they are within the radius
-  for (const user of allUsers) {
+  for (const user of users) {
     const distance = calculateDistanceBetweenCoordinates(
       latitude,
       longitude,

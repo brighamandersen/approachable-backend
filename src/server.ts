@@ -71,35 +71,48 @@ app.get('/users', async (_req: Request, res: Response<User[] | string>) => {
 });
 
 /**
- * Get users within a certain radius in feet
+ * Get users within a certain radius in feet of a certain user
  */
 app.get(
   '/users/nearby',
   async (
     req: Request<{
-      latitude: string;
-      longitude: string;
+      userId: string;
       radiusInFeet: string;
     }>,
     res: Response<User[] | string>
   ) => {
-    const latitude = parseFloat(req.query.latitude as string);
-    const longitude = parseFloat(req.query.longitude as string);
+    const userId = parseInt(req.query.userId as string);
     const radiusInFeet: Feet = parseFloat(req.query.radiusInFeet as string);
 
-    if (!latitude || !longitude || !radiusInFeet) {
+    if (!userId || !radiusInFeet) {
       res.status(400).send('Invalid query parameters');
       return;
     }
 
-    console.log('hit');
-
     try {
-      const allUsers = await prisma.user.findMany();
+      const targetUser = await prisma.user.findUnique({
+        where: {
+          id: userId
+        }
+      });
+      if (!targetUser) {
+        res.status(404).send('User not found');
+        return;
+      }
+
+      const allUsersButTargetUser = await prisma.user.findMany({
+        where: {
+          id: {
+            not: userId
+          }
+        }
+      });
+
       const usersNearby = getUsersWithinRadius(
-        allUsers,
-        latitude,
-        longitude,
+        allUsersButTargetUser,
+        targetUser.latitude,
+        targetUser.longitude,
         radiusInFeet
       );
       res.send(usersNearby);
