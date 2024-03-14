@@ -9,6 +9,7 @@ async function main() {
         firstName: 'Taylor',
         lastName: 'English',
         latitude: 40.0,
+        bio: 'I am fluent in English',
         longitude: 50.0,
         locationLastUpdated: 1704067200
       }
@@ -17,6 +18,7 @@ async function main() {
       data: {
         firstName: 'Brigham',
         lastName: 'Andersen',
+        bio: 'Talk to me about Tagalog',
         latitude: 80.0,
         longitude: 90.0,
         locationLastUpdated: 1706832000
