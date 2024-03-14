@@ -12,6 +12,15 @@ npm run db-init
 npm run dev
 ```
 
+## Deployment Process
+
+```
+npm run build
+npm run forever
+```
+
+Also make sure to set up nginx to send requests to `https://approachable-api.brighambandersen.com` to the correct port.
+
 ## API Usage
 
 > This shows how to make requests to the production endpoint at `https://approachable-api.brighambandersen.com`. You can test endpoints in development by replacing the production URL with `http://localhost:{PORT}`.
@@ -22,25 +31,25 @@ Create a user
 curl -X POST \
 -H "Content-Type: application/json" \
 -d '{"firstName": "New", "lastName": "User", "bio": "I love coding", "latitude": 40.5, "longitude": 75.0}' \
-http://localhost:3000/users
+https://approachable-api.brighambandersen.com/users
 ```
 
 Get all users
 
 ```
-curl http://localhost:3000/users
+curl https://approachable-api.brighambandersen.com/users
 ```
 
 Get users nearby a certain user (within a certain radius in feet)
 
 ```
-curl 'http://localhost:3000/users/nearby?userId=123&radiusInFeet=400'
+curl 'https://approachable-api.brighambandersen.com/users/nearby?userId=123&radiusInFeet=400'
 ```
 
 Get user by id
 
 ```
-curl http://localhost:3000/users/123
+curl https://approachable-api.brighambandersen.com/users/123
 ```
 
 Update a user by id
@@ -49,13 +58,13 @@ Update a user by id
 curl -X PUT \
 -H "Content-Type: application/json" \
 -d '{"firstName": "New", "lastName": "User", "bio": "I love coding", "latitude": 40.5, "longitude": 75.0}' \
-http://localhost:3000/users/123
+https://approachable-api.brighambandersen.com/users/123
 ```
 
 Delete user by id
 
 ```
-curl -X DELETE http://localhost:3000/users/123
+curl -X DELETE https://approachable-api.brighambandersen.com/users/123
 ```
 
 ## Decisions
