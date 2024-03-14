@@ -1,13 +1,15 @@
 import express, { Request, Response } from 'express';
+import cors from 'cors';
 import { PrismaClient } from '@prisma/client';
 import { User } from './types';
 import { getCurrentTimestamp, getUsersWithinRadius } from './utils';
 import { Feet } from './types';
 
-const app = express();
-app.use(express.json());
 const PORT = process.env.PORT || 3003;
 const prisma = new PrismaClient();
+const app = express();
+app.use(express.json());
+app.use(cors({ origin: `*` }));
 
 app.get('/', (_req: Request, res: Response) => {
   res.send('Welcome to the Approachable API!');
