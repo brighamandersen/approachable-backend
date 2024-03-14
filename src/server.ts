@@ -1,7 +1,8 @@
 import express, { Request, Response } from 'express';
 import { PrismaClient, User } from '@prisma/client';
-// import { User } from './types';
-import { getCurrentTimestamp, getUsersWithinSquareFootDistance } from './utils';
+// import { User } from './types'; FIXME: Which User type should be used?
+import { getCurrentTimestamp, getUsersWithinRadius } from './utils';
+import { Feet } from './types';
 
 const app = express();
 app.use(express.json());
@@ -61,13 +62,53 @@ app.post(
  */
 app.get('/users', async (_req: Request, res: Response<User[] | string>) => {
   try {
-    const users = await prisma.user.findMany();
-    res.send(users);
+    const allUsers = await prisma.user.findMany();
+    res.send(allUsers);
   } catch (error) {
     console.error('Error executing query:', error);
     res.status(500).send('Internal Server Error');
   }
 });
+
+/**
+ * Get users within a certain radius in feet
+ */
+app.get(
+  '/users/nearby',
+  async (
+    req: Request<{
+      latitude: string;
+      longitude: string;
+      radiusInFeet: string;
+    }>,
+    res: Response<User[] | string>
+  ) => {
+    const latitude = parseFloat(req.query.latitude as string);
+    const longitude = parseFloat(req.query.longitude as string);
+    const radiusInFeet: Feet = parseFloat(req.query.radiusInFeet as string);
+
+    if (!latitude || !longitude || !radiusInFeet) {
+      res.status(400).send('Invalid query parameters');
+      return;
+    }
+
+    console.log('hit');
+
+    try {
+      const allUsers = await prisma.user.findMany();
+      const usersNearby = getUsersWithinRadius(
+        allUsers,
+        latitude,
+        longitude,
+        radiusInFeet
+      );
+      res.send(usersNearby);
+    } catch (error) {
+      console.error('Error executing query:', error);
+      res.status(500).send('Internal Server Error');
+    }
+  }
+);
 
 /**
  * Get user by id
