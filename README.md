@@ -14,18 +14,11 @@ npm run dev
 
 ## Deployment Process
 
-First time
-
 ```
 npm i
 npm run db-init
-```
-
-Future builds
-
-```
 npm run build
-npm run forever
+npm run deploy
 ```
 
 Also make sure to set up nginx to send requests to `https://approachable-api.brighambandersen.com` to the correct port.
