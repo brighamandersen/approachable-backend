@@ -1,5 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 
+const JAN_1ST_2000 = 946684800;
+
 const prisma = new PrismaClient();
 
 async function main() {
@@ -8,8 +10,9 @@ async function main() {
       data: {
         firstName: 'Taylor',
         lastName: 'English',
-        latitude: 40.0,
+        birthDate: JAN_1ST_2000,
         bio: 'I am fluent in English',
+        latitude: 40.0,
         longitude: 50.0,
         locationLastUpdated: 1704067200
       }
@@ -18,6 +21,7 @@ async function main() {
       data: {
         firstName: 'Brigham',
         lastName: 'Andersen',
+        birthDate: JAN_1ST_2000,
         bio: 'Talk to me about Tagalog',
         latitude: 38.90343,
         longitude: -77.0541,
@@ -28,6 +32,7 @@ async function main() {
       data: {
         firstName: 'Trader',
         lastName: 'Joe',
+        birthDate: JAN_1ST_2000,
         bio: 'I like cabbage',
         latitude: 38.90412,
         longitude: -77.05303,
