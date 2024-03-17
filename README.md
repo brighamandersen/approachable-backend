@@ -8,15 +8,20 @@ See [approachable-frontend](https://github.com/janksmap/approachable-frontend) r
 
 ```
 npm i
-npm run db-init
 npm run dev
+```
+
+## Database Setup
+
+```
+npm run db-init
+npm run db-populate
 ```
 
 ## Deployment Process
 
 ```
 npm i
-npm run db-init
 npm run build
 npm run deploy
 ```
