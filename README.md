@@ -25,9 +25,18 @@ Also make sure to set up nginx to send requests to `https://approachable-api.bri
 
 ## API Usage
 
-> This shows how to make requests to the production endpoint at `https://approachable-api.brighambandersen.com`. You can test endpoints in development by replacing the production URL with `http://localhost:{PORT}`.
+### Create a user
 
-Create a user
+Dev
+
+```
+curl -X POST \
+-H "Content-Type: application/json" \
+-d '{"firstName": "New", "lastName": "User", "bio": "I love coding", "latitude": 40.5, "longitude": 75.0}' \
+http://localhost:3003/users
+```
+
+Prod
 
 ```
 curl -X POST \
@@ -36,34 +45,77 @@ curl -X POST \
 https://approachable-api.brighambandersen.com/users
 ```
 
-Get all users
+### Get all users
+
+Dev
+
+```
+curl http://localhost:3003/users
+```
+
+Prod
 
 ```
 curl https://approachable-api.brighambandersen.com/users
 ```
 
-Get users nearby a certain user (within a certain radius in feet)
+### Get users nearby a certain user (within a certain radius in feet)
+
+Dev
+
+```
+curl 'http://localhost:3003/users/nearby?userId=123&radiusInFeet=400'
+```
+
+Prod
 
 ```
 curl 'https://approachable-api.brighambandersen.com/users/nearby?userId=123&radiusInFeet=400'
 ```
 
-Get user by id
+### Get user by id
+
+Dev
+
+```
+curl http://localhost:3003/users/123
+```
+
+Prod
 
 ```
 curl https://approachable-api.brighambandersen.com/users/123
 ```
 
-Update a user by id
+### Update a user by id
+
+Dev
 
 ```
 curl -X PUT \
 -H "Content-Type: application/json" \
--d '{"firstName": "New", "lastName": "User", "bio": "I love coding", "latitude": 40.5, "longitude": 75.0}' \
+-d '{"firstName": "Edited", "lastName": "User", "bio": "I love coding", "latitude": 40.5, "longitude": 75.0}' \
+http://localhost:3003/users/123
+```
+
+Prod
+
+```
+curl -X PUT \
+-H "Content-Type: application/json" \
+-d '{"firstName": "Edited", "lastName": "User", "bio": "I love coding", "latitude": 40.5, "longitude": 75.0}' \
 https://approachable-api.brighambandersen.com/users/123
 ```
 
-Delete user by id
+### Delete user by id
+
+Dev
+
+```
+curl -X DELETE http://localhost:3003/users/123
+```
+
+Prod
 
 ```
 curl -X DELETE https://approachable-api.brighambandersen.com/users/123

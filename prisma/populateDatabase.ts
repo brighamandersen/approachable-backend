@@ -19,9 +19,19 @@ async function main() {
         firstName: 'Brigham',
         lastName: 'Andersen',
         bio: 'Talk to me about Tagalog',
-        latitude: 80.0,
-        longitude: 90.0,
+        latitude: 38.90343,
+        longitude: -77.0541,
         locationLastUpdated: 1706832000
+      }
+    });
+    await prisma.user.create({
+      data: {
+        firstName: 'Trader',
+        lastName: 'Joe',
+        bio: 'I like cabbage',
+        latitude: 38.90412,
+        longitude: -77.05303,
+        locationLastUpdated: 1710031975
       }
     });
     console.log('Data inserted successfully');
