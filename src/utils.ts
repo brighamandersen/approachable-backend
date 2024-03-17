@@ -1,5 +1,9 @@
 import { Meters, UnixTimestamp, User } from './types';
 
+export function isSet(variable: any): boolean {
+  return variable !== undefined && variable !== null;
+}
+
 export function getCurrentTimestamp(): UnixTimestamp {
   return Math.floor(Date.now() / 1000);
 }

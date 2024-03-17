@@ -10,7 +10,7 @@ export interface User {
   bio: string | null;
   interestedInFriends: boolean;
   interestedInDating: boolean;
-  interestingInBusiness: boolean;
+  interestedInBusiness: boolean;
   interestedInHelp: boolean;
   latitude: number;
   longitude: number;

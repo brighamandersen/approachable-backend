@@ -15,7 +15,7 @@ model User {
   bio                   String?
   interestedInFriends   Boolean   @default(false)
   interestedInDating    Boolean   @default(false)
-  interestingInBusiness Boolean   @default(false)
+  interestedInBusiness  Boolean   @default(false)
   interestedInHelp      Boolean   @default(false)
   latitude              Float
   longitude             Float

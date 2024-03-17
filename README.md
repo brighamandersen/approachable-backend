@@ -30,19 +30,13 @@ Also make sure to set up nginx to send requests to `https://approachable-api.bri
 Dev
 
 ```
-curl -X POST \
--H "Content-Type: application/json" \
--d '{"firstName": "New", "lastName": "User", "birthDate": 946684800, "bio": "I love coding", "latitude": 40.5, "longitude": 75.0}' \
-http://localhost:3003/users
+curl -X POST -H "Content-Type: application/json" -d '{"firstName": "New", "lastName": "User", "birthDate": 946684800, "latitude": 40.5, "longitude": 75.0}' http://localhost:3003/users
 ```
 
 Prod
 
 ```
-curl -X POST \
--H "Content-Type: application/json" \
--d '{"firstName": "New", "lastName": "User", "birthDate": 946684800, "bio": "I love coding", "latitude": 40.5, "longitude": 75.0}' \
-https://approachable-api.brighambandersen.com/users
+curl -X POST -H "Content-Type: application/json" -d '{"firstName": "New", "lastName": "User", "birthDate": 946684800, "latitude": 40.5, "longitude": 75.0}' https://approachable-api.brighambandersen.com/users
 ```
 
 ### Get all users
@@ -92,19 +86,13 @@ curl https://approachable-api.brighambandersen.com/users/123
 Dev
 
 ```
-curl -X PUT \
--H "Content-Type: application/json" \
--d '{"firstName": "Edited", "lastName": "User", "birthDate": 946684800, "bio": "I love coding", "latitude": 40.5, "longitude": 75.0}' \
-http://localhost:3003/users/123
+curl -X PUT -H "Content-Type: application/json" -d '{"firstName": "Edited", "lastName": "User", "birthDate": 946684800, "interestedInFriends": true, "interestedInDating": true, "interestedInBusiness": true, "interestedInHelp": true, "bio": "I love coding", "latitude": 40.5, "longitude": 75.0}' http://localhost:3003/users/123
 ```
 
 Prod
 
 ```
-curl -X PUT \
--H "Content-Type: application/json" \
--d '{"firstName": "Edited", "lastName": "User", "birthDate": 946684800, "bio": "I love coding", "latitude": 40.5, "longitude": 75.0}' \
-https://approachable-api.brighambandersen.com/users/123
+curl -X PUT -H "Content-Type: application/json" -d '{"firstName": "Edited", "lastName": "User", "birthDate": 946684800, "interestedInFriends": true, "interestedInDating": true, "interestedInBusiness": true, "interestedInHelp": true, "bio": "I love coding", "latitude": 40.5, "longitude": 75.0}' https://approachable-api.brighambandersen.com/users/123
 ```
 
 ### Delete user by id

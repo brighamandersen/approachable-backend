@@ -1,8 +1,8 @@
 import express, { Request, Response } from 'express';
 import cors from 'cors';
 import { PrismaClient } from '@prisma/client';
-import { User } from './types';
-import { getCurrentTimestamp, getUsersWithinRadius } from './utils';
+import { UnixTimestamp, User } from './types';
+import { getCurrentTimestamp, getUsersWithinRadius, isSet } from './utils';
 import { Meters } from './types';
 
 const PORT = process.env.PORT || 3003;
@@ -28,24 +28,15 @@ app.post(
         firstName: string;
         lastName: string;
         birthDate: number;
-        bio: string;
         latitude: number;
         longitude: number;
       }
     >,
     res: Response<User | string>
   ) => {
-    const { firstName, lastName, birthDate, bio, latitude, longitude } =
-      req.body;
+    const { firstName, lastName, birthDate, latitude, longitude } = req.body;
 
-    if (
-      !firstName ||
-      !lastName ||
-      !birthDate ||
-      !bio ||
-      !latitude ||
-      !longitude
-    ) {
+    if (!firstName || !lastName || !birthDate || !latitude || !longitude) {
       res.status(400).send('Invalid request body');
       return;
     }
@@ -56,7 +47,6 @@ app.post(
           firstName,
           lastName,
           birthDate,
-          bio,
           latitude,
           longitude,
           locationLastUpdated: getCurrentTimestamp()
@@ -179,8 +169,12 @@ app.put(
       {
         firstName?: string;
         lastName?: string;
-        birthDate?: number;
-        bio?: string;
+        birthDate?: UnixTimestamp;
+        bio?: string | null;
+        interestedInFriends?: boolean;
+        interestedInDating?: boolean;
+        interestedInBusiness?: boolean;
+        interestedInHelp?: boolean;
         latitude?: number;
         longitude?: number;
       }
@@ -188,16 +182,31 @@ app.put(
     res: Response<User | string>
   ) => {
     const userId = parseInt(req.params.id);
-    const { firstName, lastName, birthDate, bio, latitude, longitude } =
-      req.body;
+
+    const {
+      firstName,
+      lastName,
+      birthDate,
+      bio,
+      interestedInFriends,
+      interestedInDating,
+      interestedInBusiness,
+      interestedInHelp,
+      latitude,
+      longitude
+    } = req.body;
 
     if (
-      !firstName &&
-      !lastName &&
-      !birthDate &&
-      !bio &&
-      !latitude &&
-      !longitude
+      !isSet(firstName) &&
+      !isSet(lastName) &&
+      !isSet(birthDate) &&
+      !isSet(bio) &&
+      !isSet(interestedInFriends) &&
+      !isSet(interestedInDating) &&
+      !isSet(interestedInBusiness) &&
+      !isSet(interestedInHelp) &&
+      !isSet(latitude) &&
+      !isSet(longitude)
     ) {
       res.status(400).send('Invalid request body');
       return;
@@ -215,6 +224,10 @@ app.put(
           lastName,
           birthDate,
           bio,
+          interestedInFriends,
+          interestedInDating,
+          interestedInBusiness,
+          interestedInHelp,
           latitude,
           longitude,
           locationLastUpdated: didUpdateLocation
