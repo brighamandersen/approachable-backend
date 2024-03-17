@@ -32,7 +32,7 @@ Dev
 ```
 curl -X POST \
 -H "Content-Type: application/json" \
--d '{"firstName": "New", "lastName": "User", "bio": "I love coding", "latitude": 40.5, "longitude": 75.0}' \
+-d '{"firstName": "New", "lastName": "User", "birthDate": 946684800, "bio": "I love coding", "latitude": 40.5, "longitude": 75.0}' \
 http://localhost:3003/users
 ```
 
@@ -41,7 +41,7 @@ Prod
 ```
 curl -X POST \
 -H "Content-Type: application/json" \
--d '{"firstName": "New", "lastName": "User", "bio": "I love coding", "latitude": 40.5, "longitude": 75.0}' \
+-d '{"firstName": "New", "lastName": "User", "birthDate": 946684800, "bio": "I love coding", "latitude": 40.5, "longitude": 75.0}' \
 https://approachable-api.brighambandersen.com/users
 ```
 
@@ -94,7 +94,7 @@ Dev
 ```
 curl -X PUT \
 -H "Content-Type: application/json" \
--d '{"firstName": "Edited", "lastName": "User", "bio": "I love coding", "latitude": 40.5, "longitude": 75.0}' \
+-d '{"firstName": "Edited", "lastName": "User", "birthDate": 946684800, "bio": "I love coding", "latitude": 40.5, "longitude": 75.0}' \
 http://localhost:3003/users/123
 ```
 
@@ -103,7 +103,7 @@ Prod
 ```
 curl -X PUT \
 -H "Content-Type: application/json" \
--d '{"firstName": "Edited", "lastName": "User", "bio": "I love coding", "latitude": 40.5, "longitude": 75.0}' \
+-d '{"firstName": "Edited", "lastName": "User", "birthDate": 946684800, "bio": "I love coding", "latitude": 40.5, "longitude": 75.0}' \
 https://approachable-api.brighambandersen.com/users/123
 ```
 

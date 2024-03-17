@@ -27,15 +27,25 @@ app.post(
       {
         firstName: string;
         lastName: string;
+        birthDate: number;
+        bio: string;
         latitude: number;
         longitude: number;
       }
     >,
     res: Response<User | string>
   ) => {
-    const { firstName, lastName, latitude, longitude } = req.body;
+    const { firstName, lastName, birthDate, bio, latitude, longitude } =
+      req.body;
 
-    if (!firstName || !lastName || !latitude || !longitude) {
+    if (
+      !firstName ||
+      !lastName ||
+      !birthDate ||
+      !bio ||
+      !latitude ||
+      !longitude
+    ) {
       res.status(400).send('Invalid request body');
       return;
     }
@@ -45,6 +55,8 @@ app.post(
         data: {
           firstName,
           lastName,
+          birthDate,
+          bio,
           latitude,
           longitude,
           locationLastUpdated: getCurrentTimestamp()
@@ -161,13 +173,32 @@ app.get(
 app.put(
   '/users/:id',
   async (
-    req: Request<{ id: string }, {}, Partial<User>>,
+    req: Request<
+      { id: string },
+      {},
+      {
+        firstName?: string;
+        lastName?: string;
+        birthDate?: number;
+        bio?: string;
+        latitude?: number;
+        longitude?: number;
+      }
+    >,
     res: Response<User | string>
   ) => {
     const userId = parseInt(req.params.id);
-    const { firstName, lastName, bio, latitude, longitude } = req.body;
+    const { firstName, lastName, birthDate, bio, latitude, longitude } =
+      req.body;
 
-    if (!firstName && !lastName && !bio && !latitude && !longitude) {
+    if (
+      !firstName &&
+      !lastName &&
+      !birthDate &&
+      !bio &&
+      !latitude &&
+      !longitude
+    ) {
       res.status(400).send('Invalid request body');
       return;
     }
@@ -182,6 +213,7 @@ app.put(
         data: {
           firstName,
           lastName,
+          birthDate,
           bio,
           latitude,
           longitude,
