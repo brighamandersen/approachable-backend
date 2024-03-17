@@ -1,7 +1,11 @@
-import { Feet, UnixTimestamp, User } from './types';
+import { Meters, UnixTimestamp, User } from './types';
 
 export function getCurrentTimestamp(): UnixTimestamp {
   return Math.floor(Date.now() / 1000);
+}
+
+function degreesToRadians(degrees: number): number {
+  return (degrees * Math.PI) / 180;
 }
 
 // Calculate the distance between two coordinates using the Haversine formula
@@ -10,29 +14,36 @@ export function calculateDistanceBetweenCoordinates(
   longitude1: number,
   latitude2: number,
   longitude2: number
-): Feet {
-  const FEET_PER_DEGREE_LATITUDE = 364000;
-  const FEET_PER_DEGREE_LONGITUDE = 288200;
+): Meters {
+  const EARTH_RADIUS_IN_METERS = 6378137;
 
-  const latitudeDistance: Feet =
-    (latitude2 - latitude1) * FEET_PER_DEGREE_LATITUDE;
+  const latitude1InRadians = degreesToRadians(latitude1);
+  const latitude2InRadians = degreesToRadians(latitude2);
+  const longitude1InRadians = degreesToRadians(longitude1);
+  const longitude2InRadians = degreesToRadians(longitude2);
 
-  const longitudeDistance: Feet =
-    (longitude2 - longitude1) * FEET_PER_DEGREE_LONGITUDE;
+  const latitudeDifference = latitude2InRadians - latitude1InRadians;
+  const longitudeDifference = longitude2InRadians - longitude1InRadians;
 
-  // Pythagorean theorem to calculate straight-line distance
-  const diagonalDistance: Feet = Math.sqrt(
-    latitudeDistance ** 2 + longitudeDistance ** 2
-  );
+  const haversineA =
+    Math.sin(latitudeDifference / 2) * Math.sin(latitudeDifference / 2) +
+    Math.cos(latitude1InRadians) *
+      Math.cos(latitude2InRadians) *
+      Math.sin(longitudeDifference / 2) *
+      Math.sin(longitudeDifference / 2);
+  const haversineC =
+    2 * Math.atan2(Math.sqrt(haversineA), Math.sqrt(1 - haversineA));
 
-  return diagonalDistance;
+  const distanceInMeters = EARTH_RADIUS_IN_METERS * haversineC;
+  console.log({ distanceInMeters });
+  return distanceInMeters;
 }
 
 export function getUsersWithinRadius(
   users: User[],
   latitude: number,
   longitude: number,
-  radiusInFeet: Feet
+  radiusInMeters: Meters
 ): User[] {
   const usersWithinRadius: User[] = [];
 
@@ -44,7 +55,7 @@ export function getUsersWithinRadius(
       user.latitude,
       user.longitude
     );
-    if (distance <= radiusInFeet) {
+    if (distance <= radiusInMeters) {
       usersWithinRadius.push(user);
     }
   }

@@ -59,18 +59,18 @@ Prod
 curl https://approachable-api.brighambandersen.com/users
 ```
 
-### Get users nearby a certain user (within a certain radius in feet)
+### Get users nearby a certain user (within a certain radius in meters)
 
 Dev
 
 ```
-curl 'http://localhost:3003/users/nearby?userId=123&radiusInFeet=400'
+curl 'http://localhost:3003/users/nearby?userId=123&radiusInMeters=400'
 ```
 
 Prod
 
 ```
-curl 'https://approachable-api.brighambandersen.com/users/nearby?userId=123&radiusInFeet=400'
+curl 'https://approachable-api.brighambandersen.com/users/nearby?userId=123&radiusInMeters=400'
 ```
 
 ### Get user by id

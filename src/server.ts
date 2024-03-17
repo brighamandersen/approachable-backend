@@ -3,7 +3,7 @@ import cors from 'cors';
 import { PrismaClient } from '@prisma/client';
 import { User } from './types';
 import { getCurrentTimestamp, getUsersWithinRadius } from './utils';
-import { Feet } from './types';
+import { Meters } from './types';
 
 const PORT = process.env.PORT || 3003;
 const prisma = new PrismaClient();
@@ -73,21 +73,23 @@ app.get('/users', async (_req: Request, res: Response<User[] | string>) => {
 });
 
 /**
- * Get users within a certain radius in feet of a certain user
+ * Get users within a certain radius in meters of a certain user
  */
 app.get(
   '/users/nearby',
   async (
     req: Request<{
       userId: string;
-      radiusInFeet: string;
+      radiusInMeters: string;
     }>,
     res: Response<User[] | string>
   ) => {
     const userId = parseInt(req.query.userId as string);
-    const radiusInFeet: Feet = parseFloat(req.query.radiusInFeet as string);
+    const radiusInMeters: Meters = parseFloat(
+      req.query.radiusInMeters as string
+    );
 
-    if (!userId || !radiusInFeet) {
+    if (!userId || !radiusInMeters) {
       res.status(400).send('Invalid query parameters');
       return;
     }
@@ -115,7 +117,7 @@ app.get(
         allUsersButTargetUser,
         targetUser.latitude,
         targetUser.longitude,
-        radiusInFeet
+        radiusInMeters
       );
       res.send(usersNearby);
     } catch (error) {

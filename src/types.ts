@@ -1,6 +1,6 @@
 export type UnixTimestamp = number;
 
-export type Feet = number;
+export type Meters = number;
 
 export interface User {
   id: number;
