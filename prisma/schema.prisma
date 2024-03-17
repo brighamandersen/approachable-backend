@@ -8,12 +8,16 @@ datasource db {
 }
 
 model User {
-  id                   Int       @id @default(autoincrement())
-  firstName            String
-  lastName             String
-  birthDate            Int
-  bio                  String?
-  latitude             Float
-  longitude            Float
-  locationLastUpdated  Int
+  id                    Int       @id @default(autoincrement())
+  firstName             String
+  lastName              String
+  birthDate             Int
+  bio                   String?
+  interestedInFriends   Boolean   @default(false)
+  interestedInDating    Boolean   @default(false)
+  interestingInBusiness Boolean   @default(false)
+  interestedInHelp      Boolean   @default(false)
+  latitude              Float
+  longitude             Float
+  locationLastUpdated   Int
 }

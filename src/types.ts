@@ -8,6 +8,10 @@ export interface User {
   lastName: string;
   birthDate: UnixTimestamp;
   bio: string | null;
+  interestedInFriends: boolean;
+  interestedInDating: boolean;
+  interestingInBusiness: boolean;
+  interestedInHelp: boolean;
   latitude: number;
   longitude: number;
   locationLastUpdated: UnixTimestamp;
