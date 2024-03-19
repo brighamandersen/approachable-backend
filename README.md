@@ -26,7 +26,7 @@ npm run build
 npm run deploy
 ```
 
-Also make sure to set up nginx to send requests to `https://approachable-api.brighambandersen.com` to the correct port.
+Also make sure to set up nginx to send requests to `https://approachable-api.brighamandersen.com` to the correct port.
 
 ## API Usage
 
@@ -41,7 +41,7 @@ curl -X POST -H "Content-Type: application/json" -d '{"firstName": "New", "lastN
 Prod
 
 ```
-curl -X POST -H "Content-Type: application/json" -d '{"firstName": "New", "lastName": "User", "birthDate": 946684800, "latitude": 40.5, "longitude": 75.0}' https://approachable-api.brighambandersen.com/users
+curl -X POST -H "Content-Type: application/json" -d '{"firstName": "New", "lastName": "User", "birthDate": 946684800, "latitude": 40.5, "longitude": 75.0}' https://approachable-api.brighamandersen.com/users
 ```
 
 ### Get all users
@@ -55,7 +55,7 @@ curl http://localhost:3003/users
 Prod
 
 ```
-curl https://approachable-api.brighambandersen.com/users
+curl https://approachable-api.brighamandersen.com/users
 ```
 
 ### Get users nearby a certain user (within a certain radius in meters)
@@ -69,7 +69,7 @@ curl 'http://localhost:3003/users/nearby?userId=123&radiusInMeters=400'
 Prod
 
 ```
-curl 'https://approachable-api.brighambandersen.com/users/nearby?userId=123&radiusInMeters=400'
+curl 'https://approachable-api.brighamandersen.com/users/nearby?userId=123&radiusInMeters=400'
 ```
 
 ### Get user by id
@@ -83,7 +83,7 @@ curl http://localhost:3003/users/123
 Prod
 
 ```
-curl https://approachable-api.brighambandersen.com/users/123
+curl https://approachable-api.brighamandersen.com/users/123
 ```
 
 ### Update a user by id
@@ -97,7 +97,7 @@ curl -X PUT -H "Content-Type: application/json" -d '{"firstName": "Edited", "las
 Prod
 
 ```
-curl -X PUT -H "Content-Type: application/json" -d '{"firstName": "Edited", "lastName": "User", "birthDate": 946684800, "interestedInFriends": true, "interestedInDating": true, "interestedInBusiness": true, "interestedInHelp": true, "bio": "I love coding", "latitude": 40.5, "longitude": 75.0}' https://approachable-api.brighambandersen.com/users/123
+curl -X PUT -H "Content-Type: application/json" -d '{"firstName": "Edited", "lastName": "User", "birthDate": 946684800, "interestedInFriends": true, "interestedInDating": true, "interestedInBusiness": true, "interestedInHelp": true, "bio": "I love coding", "latitude": 40.5, "longitude": 75.0}' https://approachable-api.brighamandersen.com/users/123
 ```
 
 ### Delete user by id
@@ -111,7 +111,7 @@ curl -X DELETE http://localhost:3003/users/123
 Prod
 
 ```
-curl -X DELETE https://approachable-api.brighambandersen.com/users/123
+curl -X DELETE https://approachable-api.brighamandersen.com/users/123
 ```
 
 ## Decisions
