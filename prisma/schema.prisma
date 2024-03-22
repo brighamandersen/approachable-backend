@@ -13,6 +13,7 @@ model User {
   lastName              String
   birthDate             Int
   bio                   String?
+  hiddenOnMap           Boolean   @default(false)
   interestedInFriends   Boolean   @default(false)
   interestedInDating    Boolean   @default(false)
   interestedInBusiness  Boolean   @default(false)

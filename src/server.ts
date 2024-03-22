@@ -171,6 +171,7 @@ app.put(
         lastName?: string;
         birthDate?: UnixTimestamp;
         bio?: string | null;
+        hiddenOnMap?: boolean;
         interestedInFriends?: boolean;
         interestedInDating?: boolean;
         interestedInBusiness?: boolean;
@@ -188,6 +189,7 @@ app.put(
       lastName,
       birthDate,
       bio,
+      hiddenOnMap,
       interestedInFriends,
       interestedInDating,
       interestedInBusiness,
@@ -201,6 +203,7 @@ app.put(
       !isSet(lastName) &&
       !isSet(birthDate) &&
       !isSet(bio) &&
+      !isSet(hiddenOnMap) &&
       !isSet(interestedInFriends) &&
       !isSet(interestedInDating) &&
       !isSet(interestedInBusiness) &&
@@ -224,6 +227,7 @@ app.put(
           lastName,
           birthDate,
           bio,
+          hiddenOnMap,
           interestedInFriends,
           interestedInDating,
           interestedInBusiness,

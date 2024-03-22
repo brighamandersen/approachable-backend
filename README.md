@@ -58,7 +58,7 @@ curl http://localhost:3003/users/123
 ### Update a user by id
 
 ```
-curl -X PUT -H "Content-Type: application/json" -d '{"firstName": "Edited", "lastName": "User", "birthDate": 946684800, "interestedInFriends": true, "interestedInDating": true, "interestedInBusiness": true, "interestedInHelp": true, "bio": "I love coding", "latitude": 40.5, "longitude": 75.0}' http://localhost:3003/users/123
+curl -X PUT -H "Content-Type: application/json" -d '{"firstName": "Edited", "lastName": "User", "birthDate": 946684800, "bio": "I love coding", "hiddenOnMap": true, "interestedInFriends": true, "interestedInDating": true, "interestedInBusiness": true, "interestedInHelp": true, "latitude": 40.5, "longitude": 75.0}' http://localhost:3003/users/123
 ```
 
 ### Delete user by id
