@@ -9,7 +9,7 @@ See [approachable-frontend](https://github.com/janksmap/approachable-frontend) r
 ```
 npm i
 npm run db-init
-npm run db-populate
+npm run db-seed
 npm run dev
 ```
 

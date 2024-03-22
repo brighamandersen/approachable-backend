@@ -5,6 +5,15 @@ const JAN_1ST_2000 = 946684800;
 const prisma = new PrismaClient();
 
 async function main() {
+  // Clear user table to start
+  try {
+    await prisma.user.deleteMany({});
+    console.log('Database cleared successfully');
+  } catch (error) {
+    console.error('Error clearing database:', error);
+  }
+
+  // Populate table
   try {
     await prisma.user.create({
       data: {

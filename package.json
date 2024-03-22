@@ -8,7 +8,7 @@
     "dev": "nodemon src/server.ts",
     "db-init": "npx prisma migrate dev --name init",
     "db-migrate": "npx prisma migrate dev",
-    "db-populate": "ts-node prisma/populateDatabase.ts",
+    "db-seed": "ts-node prisma/seedDatabase.ts",
     "db-cli": "sqlite3 db.sqlite3",
     "db-gui": "open db.sqlite3",
     "studio": "npx prisma studio",
