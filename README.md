@@ -4,114 +4,67 @@ Project for Brigham Andersen and Taylor English
 
 See [approachable-frontend](https://github.com/janksmap/approachable-frontend) repo
 
-## Installation
+## Dev Setup
 
 ```
 npm i
+npm run db-init
+npm run db-populate
 npm run dev
 ```
 
-## Database Setup
-
-```
-npm run db-init
-npm run db-populate
-```
-
-## Deployment Process
+## Production Setup
 
 ```
 npm i
+npm run db-init
+```
+
+## Deployment -> Production Process
+
+```
 npm run build
 npm run deploy
 ```
 
-Also make sure to set up nginx to send requests to `https://approachable-api.brighamandersen.com` to the correct port.
-
 ## API Usage
 
-### Create a user
+> Replace [http://localhost:3003](http://localhost:3003) with [https://approachable-api.brighamandersen.com](https://approachable-api.brighamandersen.com) to use production endpoints instead!
 
-Dev
+### Create a user
 
 ```
 curl -X POST -H "Content-Type: application/json" -d '{"firstName": "New", "lastName": "User", "birthDate": 946684800, "latitude": 40.5, "longitude": 75.0}' http://localhost:3003/users
 ```
 
-Prod
-
-```
-curl -X POST -H "Content-Type: application/json" -d '{"firstName": "New", "lastName": "User", "birthDate": 946684800, "latitude": 40.5, "longitude": 75.0}' https://approachable-api.brighamandersen.com/users
-```
-
 ### Get all users
-
-Dev
 
 ```
 curl http://localhost:3003/users
 ```
 
-Prod
-
-```
-curl https://approachable-api.brighamandersen.com/users
-```
-
 ### Get users nearby a certain user (within a certain radius in meters)
-
-Dev
 
 ```
 curl 'http://localhost:3003/users/nearby?userId=123&radiusInMeters=400'
 ```
 
-Prod
-
-```
-curl 'https://approachable-api.brighamandersen.com/users/nearby?userId=123&radiusInMeters=400'
-```
-
 ### Get user by id
-
-Dev
 
 ```
 curl http://localhost:3003/users/123
 ```
 
-Prod
-
-```
-curl https://approachable-api.brighamandersen.com/users/123
-```
-
 ### Update a user by id
-
-Dev
 
 ```
 curl -X PUT -H "Content-Type: application/json" -d '{"firstName": "Edited", "lastName": "User", "birthDate": 946684800, "interestedInFriends": true, "interestedInDating": true, "interestedInBusiness": true, "interestedInHelp": true, "bio": "I love coding", "latitude": 40.5, "longitude": 75.0}' http://localhost:3003/users/123
 ```
 
-Prod
-
-```
-curl -X PUT -H "Content-Type: application/json" -d '{"firstName": "Edited", "lastName": "User", "birthDate": 946684800, "interestedInFriends": true, "interestedInDating": true, "interestedInBusiness": true, "interestedInHelp": true, "bio": "I love coding", "latitude": 40.5, "longitude": 75.0}' https://approachable-api.brighamandersen.com/users/123
-```
-
 ### Delete user by id
-
-Dev
 
 ```
 curl -X DELETE http://localhost:3003/users/123
-```
-
-Prod
-
-```
-curl -X DELETE https://approachable-api.brighamandersen.com/users/123
 ```
 
 ## Decisions
