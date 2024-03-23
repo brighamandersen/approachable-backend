@@ -12,6 +12,7 @@ model User {
   firstName             String
   lastName              String
   birthDate             Int
+  profilePictureUrl     String?
   bio                   String?
   hiddenOnMap           Boolean   @default(false)
   interestedInFriends   Boolean   @default(false)

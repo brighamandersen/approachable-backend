@@ -7,6 +7,7 @@ export interface User {
   firstName: string;
   lastName: string;
   birthDate: UnixTimestamp;
+  profilePictureUrl: string | null;
   bio: string | null;
   hiddenOnMap: boolean;
   interestedInFriends: boolean;

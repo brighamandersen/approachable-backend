@@ -28,15 +28,24 @@ app.post(
         firstName: string;
         lastName: string;
         birthDate: number;
+        bio?: string;
         latitude: number;
         longitude: number;
       }
     >,
     res: Response<User | string>
   ) => {
-    const { firstName, lastName, birthDate, latitude, longitude } = req.body;
+    const { firstName, lastName, birthDate, bio, latitude, longitude } =
+      req.body;
 
-    if (!firstName || !lastName || !birthDate || !latitude || !longitude) {
+    if (
+      !firstName ||
+      !lastName ||
+      !birthDate ||
+      !bio ||
+      !latitude ||
+      !longitude
+    ) {
       res.status(400).send('Invalid request body');
       return;
     }
@@ -47,6 +56,7 @@ app.post(
           firstName,
           lastName,
           birthDate,
+          bio,
           latitude,
           longitude,
           locationLastUpdated: getCurrentTimestamp()
