@@ -8,6 +8,7 @@ export interface User {
   lastName: string;
   birthDate: UnixTimestamp;
   bio: string | null;
+  hiddenOnMap: boolean;
   interestedInFriends: boolean;
   interestedInDating: boolean;
   interestedInBusiness: boolean;
