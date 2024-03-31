@@ -31,6 +31,20 @@ npm run deploy
 
 > Replace [http://localhost:3003](http://localhost:3003) with [https://approachable-api.brighamandersen.com](https://approachable-api.brighamandersen.com) to use production endpoints instead!
 
+> When using curl and doing sessions, you'll have to log in passing in `-c cookies.txt` which will save session credentials to a cookies.txt file. Then on your remaining requests, use `-b cookies.txt` to use those session credentials.
+
+### Log in
+
+```
+curl -X POST -H "Content-Type: application/json" -d '{"userId": 1}' http://localhost:3003/login -c cookies.txt
+```
+
+### Log out
+
+```
+curl -X POST http://localhost:3003/logout -b cookies.txt
+```
+
 ### Create a user
 
 ```
@@ -53,6 +67,12 @@ curl 'http://localhost:3003/users/nearby?userId=123&radiusInMeters=400'
 
 ```
 curl http://localhost:3003/users/123
+```
+
+### Add a profile picture to a user
+
+```
+curl -X POST -F "profilePicture=@/Users/brig/Downloads/zawadie/zawadie.png" http://localhost:3003/profile-pictures -b cookies.txt
 ```
 
 ### Update a user by id

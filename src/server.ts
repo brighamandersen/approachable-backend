@@ -1,15 +1,171 @@
-import express, { Request, Response } from 'express';
+import express, { NextFunction, Request, Response } from 'express';
 import cors from 'cors';
+import multer from 'multer';
+import path from 'path';
+import fs from 'fs';
 import { PrismaClient } from '@prisma/client';
-import { UnixTimestamp, User } from './types';
+import session from 'express-session';
+import { User } from './types';
 import { getCurrentTimestamp, getUsersWithinRadius, isSet } from './utils';
-import { Meters } from './types';
+
+const PROFILE_PICTURES_DIR = 'uploads/profile-pictures/';
+
+declare module 'express-session' {
+  interface SessionData {
+    userId: number;
+  }
+}
+
+// FIXME: At some point throw validation errors for types (if say you pass in a string for birthDate. could use joi)
 
 const PORT = process.env.PORT || 3003;
 const prisma = new PrismaClient();
 const app = express();
 app.use(express.json());
 app.use(cors({ origin: `*` }));
+app.use(
+  session({
+    secret: 'RnMUNJkDtn%7&SKoa$4EQiT^JPFs',
+    resave: false,
+    saveUninitialized: true
+  })
+);
+
+const requireAuth = (req: Request, res: Response, next: NextFunction) => {
+  if (!req.session.userId) {
+    res.status(401).send('Unauthorized: User is not logged in');
+    return;
+  }
+
+  next();
+};
+
+const upload = multer({
+  limits: {
+    fileSize: 10485760 // 10 MB
+  },
+  storage: multer.diskStorage({
+    destination: PROFILE_PICTURES_DIR,
+    filename: function (req, file, cb) {
+      const extension = path.extname(file.originalname);
+      const filename = `user${req.session.userId}${extension}`;
+      cb(null, filename);
+    }
+  })
+});
+
+app.use('/profile-pictures', express.static(PROFILE_PICTURES_DIR));
+
+app.post(
+  '/profile-pictures',
+  requireAuth,
+  upload.single('profilePicture'),
+  async (req, res) => {
+    if (!req.file) {
+      res.status(400).send('File is required');
+      return;
+    }
+
+    // After the file is uploaded, update the user's profile picture link in the database
+    const userId = req.session.userId;
+    const uploadedFile = req.file;
+    try {
+      // Delete the existing profile picture if it exists
+      const user = await prisma.user.findUnique({
+        where: {
+          id: userId
+        },
+        select: {
+          profilePicture: true
+        }
+      });
+
+      if (user?.profilePicture) {
+        // Delete the existing profile picture
+        fs.unlinkSync(`${PROFILE_PICTURES_DIR}${user.profilePicture}`);
+      }
+
+      const updatedUser = await prisma.user.update({
+        where: {
+          id: userId
+        },
+        data: {
+          profilePicture: uploadedFile.filename // just 'user1.png' for example
+        }
+      });
+
+      res.send(updatedUser);
+    } catch (error) {
+      console.error('Error updating user profile picture:', error);
+      res.status(500).send('Internal Server Error');
+    }
+  }
+);
+
+app.post(
+  '/login',
+  async (
+    req: Request<
+      {},
+      {},
+      {
+        userId: number;
+      }
+    >,
+    res: Response
+  ) => {
+    const { userId } = req.body;
+
+    if (!userId) {
+      return res.status(400).send('userId is required');
+    }
+
+    if (req.session.userId) {
+      res.status(200).send(`User ${req.session.userId} is already logged in`);
+      return;
+    }
+
+    // Check if user exists in the database
+    try {
+      const user = await prisma.user.findUnique({
+        where: {
+          id: userId
+        }
+      });
+
+      if (!user) {
+        res.status(404).send(`User with id ${userId} not found`);
+        return;
+      }
+    } catch (error) {
+      console.error('Error logging in:', error);
+      res.status(500).send('Internal Server Error');
+      return;
+    }
+
+    req.session.userId = userId;
+
+    res.status(200).send(`User ${userId} logged in successfully`);
+  }
+);
+
+app.post('/logout', (req, res) => {
+  if (!req.session.userId) {
+    res.status(401).send('No one was logged in');
+    return;
+  }
+
+  const userId = req.session.userId;
+  req.session.destroy((err) => {
+    if (err) {
+      console.error('Error destroying session:', err);
+      res.status(500).send('Internal Server Error');
+      return;
+    }
+
+    res.status(200).send(`User ${userId} logged out successfully`);
+  });
+});
 
 app.get('/', (_req: Request, res: Response) => {
   res.send('Welcome to the Approachable API!');
@@ -97,7 +253,7 @@ app.get(
     res: Response<User[] | string>
   ) => {
     const userId = parseInt(req.query.userId as string);
-    const radiusInMeters: Meters = parseFloat(
+    const radiusInMeters: number = parseFloat(
       req.query.radiusInMeters as string
     );
 
@@ -179,7 +335,7 @@ app.put(
       {
         firstName?: string;
         lastName?: string;
-        birthDate?: UnixTimestamp;
+        birthDate?: number;
         bio?: string | null;
         hiddenOnMap?: boolean;
         interestedInFriends?: boolean;

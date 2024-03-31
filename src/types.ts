@@ -1,13 +1,9 @@
-export type UnixTimestamp = number;
-
-export type Meters = number;
-
 export interface User {
   id: number;
   firstName: string;
   lastName: string;
-  birthDate: UnixTimestamp;
-  profilePictureUrl: string | null;
+  birthDate: number; // Unix timestamp
+  profilePicture: string | null;
   bio: string | null;
   hiddenOnMap: boolean;
   interestedInFriends: boolean;
@@ -16,5 +12,5 @@ export interface User {
   interestedInHelp: boolean;
   latitude: number;
   longitude: number;
-  locationLastUpdated: UnixTimestamp;
+  locationLastUpdated: number; // Unix timestamp
 }

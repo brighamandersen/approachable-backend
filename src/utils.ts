@@ -1,10 +1,11 @@
-import { Meters, UnixTimestamp, User } from './types';
+import { User } from './types';
 
 export function isSet(variable: any): boolean {
   return variable !== undefined && variable !== null;
 }
 
-export function getCurrentTimestamp(): UnixTimestamp {
+// Get the current Unix timestamp
+export function getCurrentTimestamp(): number {
   return Math.floor(Date.now() / 1000);
 }
 
@@ -12,13 +13,13 @@ function degreesToRadians(degrees: number): number {
   return (degrees * Math.PI) / 180;
 }
 
-// Calculate the distance between two coordinates using the Haversine formula
+// Calculate the distance in meters between two coordinates using the Haversine formula
 export function calculateDistanceBetweenCoordinates(
   latitude1: number,
   longitude1: number,
   latitude2: number,
   longitude2: number
-): Meters {
+): number {
   const EARTH_RADIUS_IN_METERS = 6378137;
 
   const latitude1InRadians = degreesToRadians(latitude1);
@@ -39,7 +40,6 @@ export function calculateDistanceBetweenCoordinates(
     2 * Math.atan2(Math.sqrt(haversineA), Math.sqrt(1 - haversineA));
 
   const distanceInMeters = EARTH_RADIUS_IN_METERS * haversineC;
-  console.log({ distanceInMeters });
   return distanceInMeters;
 }
 
@@ -47,7 +47,7 @@ export function getUsersWithinRadius(
   users: User[],
   latitude: number,
   longitude: number,
-  radiusInMeters: Meters
+  radiusInMeters: number
 ): User[] {
   const usersWithinRadius: User[] = [];
 
