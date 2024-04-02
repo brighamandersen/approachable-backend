@@ -16,8 +16,6 @@ declare module 'express-session' {
   }
 }
 
-// FIXME: At some point throw validation errors for types (if say you pass in a string for birthDate. could use joi)
-
 const PORT = process.env.PORT || 3003;
 const prisma = new PrismaClient();
 const app = express();
@@ -40,15 +38,16 @@ const requireAuth = (req: Request, res: Response, next: NextFunction) => {
   next();
 };
 
+const TEN_MB_IN_BYTES = 10485760;
 const upload = multer({
   limits: {
-    fileSize: 10485760 // 10 MB
+    fileSize: TEN_MB_IN_BYTES
   },
   storage: multer.diskStorage({
     destination: PROFILE_PICTURES_DIR,
     filename: function (req, file, cb) {
       const extension = path.extname(file.originalname);
-      const filename = `user${req.session.userId}${extension}`;
+      const filename = 'user' + req.session.userId?.toString() + extension;
       cb(null, filename);
     }
   })
