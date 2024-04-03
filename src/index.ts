@@ -1,15 +1,12 @@
 import express, { Request, Response } from 'express';
 import cors from 'cors';
-import multer from 'multer';
-import path from 'path';
-import fs from 'fs';
 import { PrismaClient } from '@prisma/client';
 import session from 'express-session';
 import { User } from './types';
 import { getCurrentTimestamp, getUsersWithinRadius, isSet } from './utils';
 import { login, logout, requireAuth } from './auth';
 import { PROFILE_PICTURES_DIR } from './constants';
-import { linkProfilePicture } from './profilePictures';
+import { linkProfilePicture, upload } from './profilePictures';
 
 const PORT = process.env.PORT || 3003;
 const prisma = new PrismaClient();
@@ -23,21 +20,6 @@ app.use(
     saveUninitialized: true
   })
 );
-
-const TEN_MB_IN_BYTES = 10485760;
-const upload = multer({
-  limits: {
-    fileSize: TEN_MB_IN_BYTES
-  },
-  storage: multer.diskStorage({
-    destination: PROFILE_PICTURES_DIR,
-    filename: function (req, file, cb) {
-      const extension = path.extname(file.originalname);
-      const filename = 'user' + req.session.userId?.toString() + extension;
-      cb(null, filename);
-    }
-  })
-});
 
 app.get('/', (_req: Request, res: Response) => {
   res.send('Welcome to the Approachable API!');

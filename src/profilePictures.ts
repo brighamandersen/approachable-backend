@@ -1,9 +1,25 @@
 import { Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
+import path from 'path';
 import fs from 'fs';
 import { PROFILE_PICTURES_DIR } from './constants';
+import multer from 'multer';
 
 const prisma = new PrismaClient();
+
+export const upload = multer({
+  limits: {
+    fileSize: 10485760 // 10 MB in bytes
+  },
+  storage: multer.diskStorage({
+    destination: PROFILE_PICTURES_DIR,
+    filename: function (req, file, cb) {
+      const extension = path.extname(file.originalname);
+      const filename = 'user' + req.session.userId?.toString() + extension;
+      cb(null, filename);
+    }
+  })
+});
 
 export const linkProfilePicture = async (req: Request, res: Response) => {
   if (!req.file) {
