@@ -1,6 +1,7 @@
 import express, { Request, Response } from 'express';
 import cors from 'cors';
 import session from 'express-session';
+import dotenv from 'dotenv';
 import { PROFILE_PICTURES_DIR } from './constants';
 import login from './auth/login';
 import logout from './auth/logout';
@@ -14,13 +15,22 @@ import updateUser from './users/updateUser';
 import getUserById from './users/getUser';
 import deleteUser from './users/deleteUser';
 
+dotenv.config();
+
+if (!process.env.SESSION_KEY) {
+  console.error(
+    'SESSION_KEY environment variable is not set. Please provide a value for SESSION_KEY in .env file.'
+  );
+  process.exit(1);
+}
+
 const PORT = process.env.PORT || 3003;
 const app = express();
 app.use(express.json());
 app.use(cors({ origin: `*` }));
 app.use(
   session({
-    secret: 'RnMUNJkDtn%7&SKoa$4EQiT^JPFs',
+    secret: process.env.SESSION_KEY,
     resave: false,
     saveUninitialized: true
   })
