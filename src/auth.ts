@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
 
-const prisma = new PrismaClient(); // FIXME: Maybe handle database logic in different spot eventually
+const prisma = new PrismaClient();
 
 export const requireAuth = (
   req: Request,

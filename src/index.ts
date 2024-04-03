@@ -9,6 +9,7 @@ import { User } from './types';
 import { getCurrentTimestamp, getUsersWithinRadius, isSet } from './utils';
 import { login, logout, requireAuth } from './auth';
 import { PROFILE_PICTURES_DIR } from './constants';
+import { linkProfilePicture } from './profilePictures';
 
 const PORT = process.env.PORT || 3003;
 const prisma = new PrismaClient();
@@ -51,46 +52,7 @@ app.post(
   '/profile-pictures',
   requireAuth,
   upload.single('profilePicture'),
-  async (req, res) => {
-    if (!req.file) {
-      res.status(400).send('File is required');
-      return;
-    }
-
-    // After the file is uploaded, update the user's profile picture link in the database
-    const userId = req.session.userId;
-    const uploadedFile = req.file;
-    try {
-      // Delete the existing profile picture if it exists
-      const user = await prisma.user.findUnique({
-        where: {
-          id: userId
-        },
-        select: {
-          profilePicture: true
-        }
-      });
-
-      if (user?.profilePicture) {
-        // Delete the existing profile picture
-        fs.unlinkSync(`${PROFILE_PICTURES_DIR}${user.profilePicture}`);
-      }
-
-      const updatedUser = await prisma.user.update({
-        where: {
-          id: userId
-        },
-        data: {
-          profilePicture: uploadedFile.filename // just 'user1.png' for example
-        }
-      });
-
-      res.send(updatedUser);
-    } catch (error) {
-      console.error('Error updating user profile picture:', error);
-      res.status(500).send('Internal Server Error');
-    }
-  }
+  linkProfilePicture
 );
 
 /**
