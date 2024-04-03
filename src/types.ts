@@ -1,3 +1,9 @@
+declare module 'express-session' {
+  interface SessionData {
+    userId?: number;
+  }
+}
+
 export interface User {
   id: number;
   firstName: string;

@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
 import { User } from '../types';
-import { getCurrentTimestamp } from '../utils';
+import { getCurrentTimestamp, isSet } from '../utils';
 
 const prisma = new PrismaClient();
 
