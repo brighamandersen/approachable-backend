@@ -1,22 +1,9 @@
-import { NextFunction, Request, Response } from 'express';
+import { Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-export const requireAuth = (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  if (!req.session?.userId) {
-    res.status(401).send('Unauthorized: User is not logged in');
-    return;
-  }
-
-  next();
-};
-
-export const login = async (
+const login = async (
   req: Request<
     {},
     {},
@@ -60,20 +47,4 @@ export const login = async (
   res.status(200).send(`User ${userId} logged in successfully`);
 };
 
-export const logout = (req: Request, res: Response) => {
-  if (!req.session?.userId) {
-    res.status(401).send('No one was logged in');
-    return;
-  }
-
-  const userId = req.session.userId;
-  req.session.destroy((err) => {
-    if (err) {
-      console.error('Error destroying session:', err);
-      res.status(500).send('Internal Server Error');
-      return;
-    }
-
-    res.status(200).send(`User ${userId} logged out successfully`);
-  });
-};
+export default login;
