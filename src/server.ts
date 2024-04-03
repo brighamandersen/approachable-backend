@@ -53,53 +53,9 @@ const upload = multer({
   })
 });
 
-app.use('/profile-pictures', express.static(PROFILE_PICTURES_DIR));
-
-app.post(
-  '/profile-pictures',
-  requireAuth,
-  upload.single('profilePicture'),
-  async (req, res) => {
-    if (!req.file) {
-      res.status(400).send('File is required');
-      return;
-    }
-
-    // After the file is uploaded, update the user's profile picture link in the database
-    const userId = req.session.userId;
-    const uploadedFile = req.file;
-    try {
-      // Delete the existing profile picture if it exists
-      const user = await prisma.user.findUnique({
-        where: {
-          id: userId
-        },
-        select: {
-          profilePicture: true
-        }
-      });
-
-      if (user?.profilePicture) {
-        // Delete the existing profile picture
-        fs.unlinkSync(`${PROFILE_PICTURES_DIR}${user.profilePicture}`);
-      }
-
-      const updatedUser = await prisma.user.update({
-        where: {
-          id: userId
-        },
-        data: {
-          profilePicture: uploadedFile.filename // just 'user1.png' for example
-        }
-      });
-
-      res.send(updatedUser);
-    } catch (error) {
-      console.error('Error updating user profile picture:', error);
-      res.status(500).send('Internal Server Error');
-    }
-  }
-);
+app.get('/', (_req: Request, res: Response) => {
+  res.send('Welcome to the Approachable API!');
+});
 
 app.post(
   '/login',
@@ -166,9 +122,53 @@ app.post('/logout', (req, res) => {
   });
 });
 
-app.get('/', (_req: Request, res: Response) => {
-  res.send('Welcome to the Approachable API!');
-});
+app.use('/profile-pictures', express.static(PROFILE_PICTURES_DIR));
+
+app.post(
+  '/profile-pictures',
+  requireAuth,
+  upload.single('profilePicture'),
+  async (req, res) => {
+    if (!req.file) {
+      res.status(400).send('File is required');
+      return;
+    }
+
+    // After the file is uploaded, update the user's profile picture link in the database
+    const userId = req.session.userId;
+    const uploadedFile = req.file;
+    try {
+      // Delete the existing profile picture if it exists
+      const user = await prisma.user.findUnique({
+        where: {
+          id: userId
+        },
+        select: {
+          profilePicture: true
+        }
+      });
+
+      if (user?.profilePicture) {
+        // Delete the existing profile picture
+        fs.unlinkSync(`${PROFILE_PICTURES_DIR}${user.profilePicture}`);
+      }
+
+      const updatedUser = await prisma.user.update({
+        where: {
+          id: userId
+        },
+        data: {
+          profilePicture: uploadedFile.filename // just 'user1.png' for example
+        }
+      });
+
+      res.send(updatedUser);
+    } catch (error) {
+      console.error('Error updating user profile picture:', error);
+      res.status(500).send('Internal Server Error');
+    }
+  }
+);
 
 /**
  * Create a user

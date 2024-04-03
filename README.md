@@ -36,7 +36,7 @@ npm run deploy
 ### Log in
 
 ```
-curl -X POST -H "Content-Type: application/json" -d '{"userId": 1}' http://localhost:3003/login -c cookies.txt
+curl -X POST -H "Content-Type: application/json" -d '{"userId": 123}' http://localhost:3003/login -c cookies.txt
 ```
 
 ### Log out
