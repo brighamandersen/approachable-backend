@@ -1,6 +1,6 @@
 {
   "apps": {
     "name": "approachable-api",
-    "script": "dist/server.js"
+    "script": "dist/index.js"
   }
 }

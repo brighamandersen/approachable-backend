@@ -2,10 +2,10 @@
   "name": "approachable-backend",
   "version": "1.0.0",
   "description": "Project for Brigham Andersen and Taylor English",
-  "main": "server.js",
+  "main": "index.js",
   "scripts": {
-    "start": "ts-node src/server.ts",
-    "dev": "nodemon src/server.ts",
+    "start": "ts-node src/index.ts",
+    "dev": "nodemon src/index.ts",
     "db-init": "npx prisma migrate dev --name init",
     "db-migrate": "npx prisma migrate dev",
     "db-seed": "ts-node prisma/seedDatabase.ts",
