@@ -1,4 +1,4 @@
-import express, { NextFunction, Request, Response } from 'express';
+import express, { Request, Response } from 'express';
 import cors from 'cors';
 import multer from 'multer';
 import path from 'path';
@@ -7,14 +7,8 @@ import { PrismaClient } from '@prisma/client';
 import session from 'express-session';
 import { User } from './types';
 import { getCurrentTimestamp, getUsersWithinRadius, isSet } from './utils';
-
-const PROFILE_PICTURES_DIR = 'uploads/profile-pictures/';
-
-declare module 'express-session' {
-  interface SessionData {
-    userId: number;
-  }
-}
+import { login, logout, requireAuth } from './auth';
+import { PROFILE_PICTURES_DIR } from './constants';
 
 const PORT = process.env.PORT || 3003;
 const prisma = new PrismaClient();
@@ -28,15 +22,6 @@ app.use(
     saveUninitialized: true
   })
 );
-
-const requireAuth = (req: Request, res: Response, next: NextFunction) => {
-  if (!req.session.userId) {
-    res.status(401).send('Unauthorized: User is not logged in');
-    return;
-  }
-
-  next();
-};
 
 const TEN_MB_IN_BYTES = 10485760;
 const upload = multer({
@@ -57,70 +42,8 @@ app.get('/', (_req: Request, res: Response) => {
   res.send('Welcome to the Approachable API!');
 });
 
-app.post(
-  '/login',
-  async (
-    req: Request<
-      {},
-      {},
-      {
-        userId: number;
-      }
-    >,
-    res: Response
-  ) => {
-    const { userId } = req.body;
-
-    if (!userId) {
-      return res.status(400).send('userId is required');
-    }
-
-    if (req.session.userId) {
-      res.status(200).send(`User ${req.session.userId} is already logged in`);
-      return;
-    }
-
-    // Check if user exists in the database
-    try {
-      const user = await prisma.user.findUnique({
-        where: {
-          id: userId
-        }
-      });
-
-      if (!user) {
-        res.status(404).send(`User with id ${userId} not found`);
-        return;
-      }
-    } catch (error) {
-      console.error('Error logging in:', error);
-      res.status(500).send('Internal Server Error');
-      return;
-    }
-
-    req.session.userId = userId;
-
-    res.status(200).send(`User ${userId} logged in successfully`);
-  }
-);
-
-app.post('/logout', (req, res) => {
-  if (!req.session.userId) {
-    res.status(401).send('No one was logged in');
-    return;
-  }
-
-  const userId = req.session.userId;
-  req.session.destroy((err) => {
-    if (err) {
-      console.error('Error destroying session:', err);
-      res.status(500).send('Internal Server Error');
-      return;
-    }
-
-    res.status(200).send(`User ${userId} logged out successfully`);
-  });
-});
+app.post('/login', login);
+app.post('/logout', logout);
 
 app.use('/profile-pictures', express.static(PROFILE_PICTURES_DIR));
 
