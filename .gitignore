@@ -5,7 +5,8 @@ dist
 *.sqlite
 *.sqlite3
 *.db
-db.sqlite-journal
+*.sqlite3-journal
+*.sqlite-journal
 pm2.log
 cookies.txt
 uploads/
