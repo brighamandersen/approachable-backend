@@ -36,10 +36,6 @@ app.use(
   })
 );
 
-app.get('/', (_req: Request, res: Response) => {
-  res.send('Welcome to the Approachable API!');
-});
-
 app.post('/login', login);
 app.post('/logout', logout);
 
@@ -51,12 +47,16 @@ app.post(
   linkProfilePicture
 );
 
-app.post('/users', createUser);
-app.get('/users', getAllUsers);
+app.get('/users/nearby', getUsersNearby);
 app.get('/users/:id', getUserById);
 app.put('/users/:id', updateUser);
 app.delete('/users/:id', deleteUser);
-app.get('/users/nearby', getUsersNearby);
+app.get('/users', getAllUsers);
+app.post('/users', createUser);
+
+app.get('/', (_req: Request, res: Response) => {
+  res.send('Welcome to the Approachable API!');
+});
 
 app.listen(PORT, () => {
   console.log(`App is listening at http://localhost:${PORT}`);

@@ -72,7 +72,7 @@ curl http://localhost:3003/users/123
 ### Add a profile picture to a user
 
 ```
-curl -X POST -F "profilePicture=@/Users/brig/Downloads/zawadie/zawadie.png" http://localhost:3003/profile-pictures -b cookies.txt
+curl -X POST -F "profilePicture=@/Users/brig/Downloads/temp.jpeg" http://localhost:3003/profile-pictures -b cookies.txt
 ```
 
 ### Update a user by id
