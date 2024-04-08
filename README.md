@@ -98,3 +98,6 @@ curl -X DELETE http://localhost:3003/users/123
 - deploy profile pictures and tell Taylor
 - Finish authentication
 - Put other routes behind requireAuth
+
+- Eventually
+  - Make PDF of Usage
