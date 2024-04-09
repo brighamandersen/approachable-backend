@@ -14,7 +14,6 @@ import getUsersNearby from './users/getUsersNearby';
 import updateUser from './users/updateUser';
 import getUserById from './users/getUser';
 import deleteUser from './users/deleteUser';
-import sessionConfig from './auth/sessionConfig';
 
 dotenv.config();
 
@@ -29,7 +28,16 @@ const PORT = process.env.PORT || 3003;
 const app = express();
 app.use(express.json());
 app.use(cors({ origin: `*` }));
-app.use(session(sessionConfig));
+app.use(
+  session({
+    cookie: {
+      maxAge: ONE_WEEK_IN_MILLISECONDS
+    },
+    secret: process.env.SESSION_KEY,
+    resave: false,
+    saveUninitialized: true
+  })
+);
 
 app.post('/login', login);
 app.post('/logout', logout);
