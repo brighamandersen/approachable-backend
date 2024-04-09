@@ -1,10 +1,10 @@
 import multer from 'multer';
 import path from 'path';
-import { PROFILE_PICTURES_DIR } from '../constants';
+import { PROFILE_PICTURES_DIR, TEN_MB_IN_BYTES } from '../constants';
 
 const uploadConfig = multer({
   limits: {
-    fileSize: 10485760 // 10 MB in bytes
+    fileSize: TEN_MB_IN_BYTES
   },
   storage: multer.diskStorage({
     destination: PROFILE_PICTURES_DIR,

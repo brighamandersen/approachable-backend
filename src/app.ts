@@ -2,7 +2,7 @@ import express, { Request, Response } from 'express';
 import cors from 'cors';
 import session from 'express-session';
 import dotenv from 'dotenv';
-import { PROFILE_PICTURES_DIR } from './constants';
+import { ONE_WEEK_IN_MILLISECONDS, PROFILE_PICTURES_DIR } from './constants';
 import login from './auth/login';
 import logout from './auth/logout';
 import requireAuth from './auth/requireAuth';
@@ -14,6 +14,7 @@ import getUsersNearby from './users/getUsersNearby';
 import updateUser from './users/updateUser';
 import getUserById from './users/getUser';
 import deleteUser from './users/deleteUser';
+import sessionConfig from './auth/sessionConfig';
 
 dotenv.config();
 
@@ -28,13 +29,7 @@ const PORT = process.env.PORT || 3003;
 const app = express();
 app.use(express.json());
 app.use(cors({ origin: `*` }));
-app.use(
-  session({
-    secret: process.env.SESSION_KEY,
-    resave: false,
-    saveUninitialized: true
-  })
-);
+app.use(session(sessionConfig));
 
 app.post('/login', login);
 app.post('/logout', logout);
