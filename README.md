@@ -95,10 +95,6 @@ curl -X DELETE http://localhost:3003/users/123
 
 ## TODO
 
-### By Today, Apr 8
-
-- Return back a full user from login
-
 ### By Thu, Apr 11
 
 - Finish authentication (hook in to google auth)
@@ -109,3 +105,7 @@ curl -X DELETE http://localhost:3003/users/123
 
 - Mass update everyone's locations (look into sockets and subscriptions)
 - Make PDF of Usage
+
+### Done
+
+- ~~Apr 8 - Return back a full user from login~~
