@@ -24,7 +24,7 @@ const deleteUser = async (
       return;
     }
 
-    res.status(204).send(); // No content (user was deleted)
+    res.status(200).send(`User ${userId} deleted successfully`);
   } catch (error) {
     console.error('Error deleting user:', error);
     res.status(500).send('Internal Server Error');
