@@ -29,13 +29,63 @@ npm run deploy
 
 ## API Usage
 
-See [api.rest](./api.rest) file for examples of how to use API.
+> Replace http://localhost:3003 with https://approachable-api.brighamandersen.com to use production endpoints instead!
 
-Make sure to install the [REST Client VS Code Extension](https://marketplace.visualstudio.com/items?itemName=humao.rest-client) to fully utilize that file and send requests on the fly without needing to copy CURL commands to the terminal.
+> Some endpoints require that you provide your session credentials via cookies. To make a new session if you don't have one already, you log in and pass in `-c cookies.txt` which will save session credentials to a cookies.txt file. Then on your remaining requests, use `-b cookies.txt` to use those session credentials.
 
-If you want to switch between local and production environments, just use the bottom bar of VS Code to switch environments or go to command palette search (shift+cmd+p) then type 'Rest Client: Switch Environment'. You'll then be able to select whether you want local or production. If you're curious, these environment variables are defined in [.vscode/settings.json](./.vscode/settings.json).
+### Log in
 
-Some endpoints require that you provide your session credentials via cookies. To make a new session if you don't have one already, you log in and pass in `-c cookies.txt` which will save session credentials to a cookies.txt file. Then on your remaining requests, use `-b cookies.txt` to use those session credentials.
+```
+curl -X POST -H "Content-Type: application/json" -d '{"userId": 123}' http://localhost:3003/login -c cookies.txt
+```
+
+### Log out
+
+```
+curl -X POST http://localhost:3003/logout -b cookies.txt
+```
+
+### Create a user
+
+```
+curl -X POST -H "Content-Type: application/json" -d '{"firstName": "New", "lastName": "User", "birthDate": 946684800, "latitude": 40.5, "longitude": 75.0}' http://localhost:3003/users
+```
+
+### Get all users
+
+```
+curl http://localhost:3003/users
+```
+
+### Get users nearby a certain user (within a certain radius in meters)
+
+```
+curl 'http://localhost:3003/users/nearby?userId=123&radiusInMeters=400'
+```
+
+### Get user by id
+
+```
+curl http://localhost:3003/users/123
+```
+
+### Add a profile picture to a user
+
+```
+curl -X POST -F "profilePicture=@/Users/brig/Downloads/temp.jpeg" http://localhost:3003/profile-pictures -b cookies.txt
+```
+
+### Update a user by id
+
+```
+curl -X PUT -H "Content-Type: application/json" -d '{"firstName": "Edited", "lastName": "User", "birthDate": 946684800, "bio": "I love coding", "hiddenOnMap": true, "interestedInFriends": true, "interestedInDating": true, "interestedInBusiness": true, "interestedInHelp": true, "latitude": 40.5, "longitude": 75.0}' http://localhost:3003/users/123
+```
+
+### Delete user by id
+
+```
+curl -X DELETE http://localhost:3003/users/123
+```
 
 ## Decisions
 
