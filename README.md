@@ -33,23 +33,9 @@ See [api.rest](./api.rest) file for examples of how to use API.
 
 Make sure to install the [REST Client VS Code Extension](https://marketplace.visualstudio.com/items?itemName=humao.rest-client) to fully utilize that file and send requests on the fly without needing to copy CURL commands to the terminal.
 
+If you want to switch between local and production environments, just use the bottom bar of VS Code to switch environments or go to command palette search (shift+cmd+p) then type 'Rest Client: Switch Environment'. You'll then be able to select whether you want local or production. If you're curious, these environment variables are defined in [.vscode/settings.json](./.vscode/settings.json).
+
 Some endpoints require that you provide your session credentials via cookies. To make a new session if you don't have one already, you log in and pass in `-c cookies.txt` which will save session credentials to a cookies.txt file. Then on your remaining requests, use `-b cookies.txt` to use those session credentials.
-
-### Test Local API
-
-Update [api.rest (line 3)](./api.rest#L3) to:
-
-```
-@baseUrl = {{localUrl}}
-```
-
-### Test Production API
-
-Update [api.rest (line 3)](./api.rest#L3) to:
-
-```
-@baseUrl = {{prodUrl}}
-```
 
 ## Decisions
 

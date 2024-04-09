@@ -1,7 +1,3 @@
-@localUrl = http://localhost:3003
-@prodUrl = https://approachable-api.brighamandersen.com
-@baseUrl = {{localUrl}}
-
 ### 
 
 # Log in
