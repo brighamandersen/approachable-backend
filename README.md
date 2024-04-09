@@ -95,6 +95,16 @@ curl -X DELETE http://localhost:3003/users/123
 
 ## TODO
 
-- deploy profile pictures and tell Taylor
-- Finish authentication
-- Put other routes behind requireAuth
+### By Today, Apr 8
+
+- Return back a full user from login
+
+### By Thu, Apr 11
+
+- Finish authentication (hook in to google auth)
+  - Put other routes behind requireAuth
+  - authTokens - do we need them if we have session ids
+
+### Eventually
+
+- Mass update everyone's locations (look into sockets and subscriptions)
