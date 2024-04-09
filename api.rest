@@ -1,6 +1,5 @@
 @localUrl = http://localhost:3003
 @prodUrl = https://approachable-api.brighamandersen.com
-# Change the baseUrl to {{localUrl}} or {{prodUrl}} depending on the environment you are testing
 @baseUrl = {{localUrl}}
 
 ### 

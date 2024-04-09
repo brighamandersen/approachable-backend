@@ -29,9 +29,27 @@ npm run deploy
 
 ## API Usage
 
-> Replace [http://localhost:3003](http://localhost:3003) with [https://approachable-api.brighamandersen.com](https://approachable-api.brighamandersen.com) to use production endpoints instead!
+See [api.rest](./api.rest) file for examples of how to use API.
 
-> When using curl and doing sessions, you'll have to log in passing in `-c cookies.txt` which will save session credentials to a cookies.txt file. Then on your remaining requests, use `-b cookies.txt` to use those session credentials.
+Make sure to install the [REST Client VS Code Extension](https://marketplace.visualstudio.com/items?itemName=humao.rest-client) to fully utilize that file and send requests on the fly without needing to copy CURL commands to the terminal.
+
+Some endpoints require that you provide your session credentials via cookies. To make a new session if you don't have one already, you log in and pass in `-c cookies.txt` which will save session credentials to a cookies.txt file. Then on your remaining requests, use `-b cookies.txt` to use those session credentials.
+
+### Test Local API
+
+Line 3 of [api.rest](./api.rest#L3)
+
+```
+@baseUrl = {{localUrl}}
+```
+
+### Test Production API
+
+Line 3 of [api.rest](./api.rest#L3)
+
+```
+@baseUrl = {{prodUrl}}
+```
 
 ### Log in
 
