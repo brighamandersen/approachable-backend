@@ -108,3 +108,4 @@ curl -X DELETE http://localhost:3003/users/123
 ### Eventually
 
 - Mass update everyone's locations (look into sockets and subscriptions)
+- Make PDF of Usage
