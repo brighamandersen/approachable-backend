@@ -1,0 +1,53 @@
+### 
+
+# Log in
+
+curl -X POST -H "Content-Type: application/json" -d '{"userId": 1}' http://localhost:3003/login -c cookies.txt
+
+### 
+
+# Log out
+
+curl -X POST http://localhost:3003/logout -b cookies.txt
+
+### 
+
+# Create a user
+
+curl -X POST -H "Content-Type: application/json" -d '{"firstName": "New", "lastName": "User", "birthDate": 946684800, "latitude": 40.5, "longitude": 75.0}' http://localhost:3003/users
+
+### 
+
+# Get all users
+
+curl http://localhost:3003/users
+
+### 
+
+# Get users nearby a certain user (within a certain radius in meters)
+
+curl 'http://localhost:3003/users/nearby?userId=1&radiusInMeters=400'
+
+### 
+
+# Get user by id
+
+curl http://localhost:3003/users/1
+
+### 
+
+# Add a profile picture to a user
+
+curl -X POST -F "profilePicture=@/Users/brig/Downloads/temp.jpeg" http://localhost:3003/profile-pictures -b cookies.txt
+
+### 
+
+# Update a user by id
+
+curl -X PUT -H "Content-Type: application/json" -d '{"firstName": "Edited", "lastName": "User", "birthDate": 946684800, "bio": "I love coding", "hiddenOnMap": true, "interestedInFriends": true, "interestedInDating": true, "interestedInBusiness": true, "interestedInHelp": true, "latitude": 40.5, "longitude": 75.0}' http://localhost:3003/users/1
+
+### 
+
+# Delete user by id
+
+curl -X DELETE http://localhost:3003/users/1
