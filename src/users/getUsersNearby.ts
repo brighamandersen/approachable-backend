@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
 import { User } from '../types';
-import { getUsersWithinRadius } from '../utils';
+import { getUsersWithinRadius, isSet } from '../utils';
 
 const prisma = new PrismaClient();
 
@@ -18,7 +18,7 @@ const getUsersNearby = async (
   const userId = parseInt(req.query.userId as string);
   const radiusInMeters: number = parseFloat(req.query.radiusInMeters as string);
 
-  if (!userId || !radiusInMeters) {
+  if (!isSet(userId) || !isSet(radiusInMeters)) {
     res.status(400).send('Invalid query parameters');
     return;
   }

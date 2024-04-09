@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
 import { User } from '../types';
-import { getCurrentTimestamp } from '../utils';
+import { getCurrentTimestamp, isSet } from '../utils';
 
 const prisma = new PrismaClient();
 
@@ -23,15 +23,14 @@ const createUser = async (
   >,
   res: Response<User | string>
 ) => {
-  const { firstName, lastName, birthDate, bio, latitude, longitude } = req.body;
+  const { firstName, lastName, birthDate, latitude, longitude } = req.body;
 
   if (
-    !firstName ||
-    !lastName ||
-    !birthDate ||
-    !bio ||
-    !latitude ||
-    !longitude
+    !isSet(firstName) ||
+    !isSet(lastName) ||
+    !isSet(birthDate) ||
+    !isSet(latitude) ||
+    !isSet(longitude)
   ) {
     res.status(400).send('Invalid request body');
     return;
@@ -43,7 +42,6 @@ const createUser = async (
         firstName,
         lastName,
         birthDate,
-        bio,
         latitude,
         longitude,
         locationLastUpdated: getCurrentTimestamp()
