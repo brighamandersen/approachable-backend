@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
 import { User } from '../types';
-import { getUsersWithinRadius, isSet } from '../utils';
+import { filterByUsersWithinRadius, isSet } from '../utils';
 
 const prisma = new PrismaClient();
 
@@ -42,7 +42,7 @@ const getUsersNearby = async (
       }
     });
 
-    const usersNearby = getUsersWithinRadius(
+    const usersNearby = filterByUsersWithinRadius(
       allUsersButTargetUser,
       targetUser.latitude,
       targetUser.longitude,

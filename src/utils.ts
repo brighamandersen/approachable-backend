@@ -43,7 +43,8 @@ export function calculateDistanceBetweenCoordinates(
   return distanceInMeters;
 }
 
-export function getUsersWithinRadius(
+// Filter users within a certain radius
+export function filterByUsersWithinRadius(
   users: User[],
   latitude: number,
   longitude: number,
