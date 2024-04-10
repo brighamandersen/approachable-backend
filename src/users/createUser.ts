@@ -13,22 +13,21 @@ const createUser = async (
     {},
     {},
     {
+      birthDate: number;
       firstName: string;
       lastName: string;
-      birthDate: number;
-      bio?: string;
       latitude: number;
       longitude: number;
     }
   >,
   res: Response<User | string>
 ) => {
-  const { firstName, lastName, birthDate, latitude, longitude } = req.body;
+  const { birthDate, firstName, lastName, latitude, longitude } = req.body;
 
   if (
+    !isSet(birthDate) ||
     !isSet(firstName) ||
     !isSet(lastName) ||
-    !isSet(birthDate) ||
     !isSet(latitude) ||
     !isSet(longitude)
   ) {
@@ -39,12 +38,12 @@ const createUser = async (
   try {
     const createdUser = await prisma.user.create({
       data: {
+        birthDate,
         firstName,
         lastName,
-        birthDate,
         latitude,
-        longitude,
-        locationLastUpdated: getCurrentTimestamp()
+        locationLastUpdated: getCurrentTimestamp(),
+        longitude
       }
     });
 
