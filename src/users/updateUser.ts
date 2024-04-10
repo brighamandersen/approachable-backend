@@ -13,15 +13,15 @@ const updateUser = async (
     { id: string },
     {},
     {
-      firstName?: string;
-      lastName?: string;
-      birthDate?: number;
       bio?: string | null;
+      birthDate?: number;
+      firstName?: string;
       hiddenOnMap?: boolean;
-      interestedInFriends?: boolean;
-      interestedInDating?: boolean;
       interestedInBusiness?: boolean;
+      interestedInDating?: boolean;
+      interestedInFriends?: boolean;
       interestedInHelp?: boolean;
+      lastName?: string;
       latitude?: number;
       longitude?: number;
     }
@@ -31,29 +31,29 @@ const updateUser = async (
   const userId = parseInt(req.params.id);
 
   const {
-    firstName,
-    lastName,
-    birthDate,
     bio,
+    birthDate,
+    firstName,
     hiddenOnMap,
-    interestedInFriends,
-    interestedInDating,
     interestedInBusiness,
+    interestedInDating,
+    interestedInFriends,
     interestedInHelp,
+    lastName,
     latitude,
     longitude
   } = req.body;
 
   if (
-    !isSet(firstName) &&
-    !isSet(lastName) &&
-    !isSet(birthDate) &&
     !isSet(bio) &&
+    !isSet(birthDate) &&
+    !isSet(firstName) &&
     !isSet(hiddenOnMap) &&
-    !isSet(interestedInFriends) &&
-    !isSet(interestedInDating) &&
     !isSet(interestedInBusiness) &&
+    !isSet(interestedInDating) &&
+    !isSet(interestedInFriends) &&
     !isSet(interestedInHelp) &&
+    !isSet(lastName) &&
     !isSet(latitude) &&
     !isSet(longitude)
   ) {
@@ -69,20 +69,20 @@ const updateUser = async (
         id: userId
       },
       data: {
-        firstName,
-        lastName,
-        birthDate,
         bio,
+        birthDate,
+        firstName,
         hiddenOnMap,
-        interestedInFriends,
-        interestedInDating,
         interestedInBusiness,
+        interestedInDating,
+        interestedInFriends,
         interestedInHelp,
+        lastName,
         latitude,
-        longitude,
         locationLastUpdated: didUpdateLocation
           ? getCurrentTimestamp()
-          : undefined
+          : undefined,
+        longitude
       }
     });
 
