@@ -9,7 +9,7 @@ See [approachable-frontend](https://github.com/janksmap/approachable-frontend) r
 ```
 npm i
 npm run db-init
-npm run db-seed
+npm run seed
 npm run dev
 ```
 
@@ -87,7 +87,7 @@ curl http://localhost:3003/users/1
 ```
 curl --request POST \
     --form "profilePicture=@/Users/brig/Downloads/temp.jpeg" \
-    --cookie cookies.txt \
+    --form "userId=1" \
     http://localhost:3003/profile-pictures
 ```
 
@@ -131,7 +131,7 @@ curl --request DELETE \
 ### By Thu, Apr 11
 
 - Finish authentication (hook in to google auth)
-  - Put other routes behind requireAuth
+  - Put other routes behind requireAuth (for updating a specific user or uploading a picture for them, your id has to match the one you provide.)
   - authTokens - do we need them if we have session ids
 
 ### Eventually

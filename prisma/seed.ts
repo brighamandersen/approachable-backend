@@ -1,11 +1,21 @@
 import { PrismaClient } from '@prisma/client';
+import { exec } from 'child_process';
 
 const JAN_1ST_2000 = 946684800;
 
 const prisma = new PrismaClient();
 
 async function main() {
-  // Clear user table to start
+  // Clear out profile pictures
+  exec('rm -f uploads/profile-pictures/*', (err, _stdout, stderr) => {
+    if (err || stderr) {
+      console.error('Error deleting files:', err, stderr);
+      return;
+    }
+    console.log('Files deleted successfully');
+  });
+
+  // Clear user table
   try {
     await prisma.user.deleteMany({});
     console.log('Database cleared successfully');
@@ -13,7 +23,7 @@ async function main() {
     console.error('Error clearing database:', error);
   }
 
-  // Populate table
+  // Populate user table
   try {
     await prisma.user.create({
       data: {
