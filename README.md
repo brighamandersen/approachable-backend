@@ -91,10 +91,19 @@ curl --request POST \
 ```
 curl --request PUT \
      --header "Content-Type: application/json" \
-     --data '{"firstName": "Edited", "lastName": "User", "birthDate": 946684800, \
-              "bio": "I love coding", "hiddenOnMap": true, "interestedInFriends": true, \
-              "interestedInDating": true, "interestedInBusiness": true, \
-              "interestedInHelp": true, "latitude": 40.5, "longitude": 75.0}' \
+     --data '{ \
+              "bio": "I love coding", \
+              "birthDate": 946684800, \
+              "firstName": "Edited", \
+              "hiddenOnMap": true, \
+              "interestedInBusiness": true, \
+              "interestedInDating": true, \
+              "interestedInFriends": true, \
+              "interestedInHelp": true, \
+              "lastName": "User", \
+              "latitude": 40.5, \
+              "longitude": 75.0 \
+            }' \
      http://localhost:3003/users/1
 ```
 
