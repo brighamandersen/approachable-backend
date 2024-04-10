@@ -1,51 +1,110 @@
 # Log in
 
-curl -X POST -H "Content-Type: application/json" -d '{"userId": 1}' {{baseUrl}}/login -c cookies.txt
+curl --request POST \
+     --header 'content-type: application/json' \
+     --data '{"userId": 1}' \
+     --cookie-jar cookies.txt \
+     http://localhost:3003/login
+###
+curl --request POST \
+     --header 'content-type: application/json' \
+     --data '{"userId": 1}' \
+     --cookie-jar cookies.txt \
+     https://approachable-api.brighamandersen.com/login
 
-### 
+################################################################################ 
 
 # Log out
 
-curl -X POST {{baseUrl}}/logout -b cookies.txt
+curl --request POST \
+     --cookie cookies.txt \
+     http://localhost:3003/logout
+###
+curl --request POST \
+     --cookie cookies.txt \
+     https://approachable-api.brighamandersen.com/logout
 
-### 
+################################################################################ 
 
 # Create a user
 
-curl -X POST -H "Content-Type: application/json" -d '{"firstName": "New", "lastName": "User", "birthDate": 946684800, "latitude": 40.5, "longitude": 75.0}' {{baseUrl}}/users
+curl --request POST \
+     --header "Content-Type: application/json" \
+     --data '{"firstName": "New", "lastName": "User", "birthDate": 946684800, \
+              "latitude": 40.5, "longitude": 75.0}' \
+     http://localhost:3003/users
+###
+curl --request POST \
+     --header "Content-Type: application/json" \
+     --data '{"firstName": "New", "lastName": "User", "birthDate": 946684800, \
+              "latitude": 40.5, "longitude": 75.0}' \
+     https://approachable-api.brighamandersen.com/users
 
-### 
+################################################################################
 
 # Get all users
 
-curl {{baseUrl}}/users
+curl http://localhost:3003/users
+###
+curl https://approachable-api.brighamandersen.com/users
 
-### 
+################################################################################
 
 # Get users nearby a certain user (within a certain radius in meters)
 
-curl '{{baseUrl}}/users/nearby?userId=1&radiusInMeters=400'
+curl 'http://localhost:3003/users/nearby?userId=1&radiusInMeters=400'
+###
+curl 'https://approachable-api.brighamandersen.com/users/nearby?userId=1&radiusInMeters=400'
 
-### 
+################################################################################
 
 # Get user by id
 
-curl {{baseUrl}}/users/1
+curl http://localhost:3003/users/1
+###
+curl https://approachable-api.brighamandersen.com/users/1
 
-### 
+################################################################################ 
 
 # Add a profile picture to a user
 
-curl -X POST -F "profilePicture=@/Users/brig/Downloads/temp.jpeg" {{baseUrl}}/profile-pictures -b cookies.txt
+curl --request POST \
+    --form "profilePicture=@/Users/brig/Downloads/temp.jpeg" \
+    --cookie cookies.txt \
+    http://localhost:3003/profile-pictures
+###
+curl --request POST \
+    --form "profilePicture=@/Users/brig/Downloads/temp.jpeg" \
+    --cookie cookies.txt \
+    https://approachable-api.brighamandersen.com/profile-pictures
 
-### 
+################################################################################ 
 
 # Update a user by id
 
-curl -X PUT -H "Content-Type: application/json" -d '{"firstName": "Edited", "lastName": "User", "birthDate": 946684800, "bio": "I love coding", "hiddenOnMap": true, "interestedInFriends": true, "interestedInDating": true, "interestedInBusiness": true, "interestedInHelp": true, "latitude": 40.5, "longitude": 75.0}' {{baseUrl}}/users/1
+curl --request PUT \
+     --header "Content-Type: application/json" \
+     --data '{"firstName": "Edited", "lastName": "User", "birthDate": 946684800, \
+              "bio": "I love coding", "hiddenOnMap": true, "interestedInFriends": true, \
+              "interestedInDating": true, "interestedInBusiness": true, \
+              "interestedInHelp": true, "latitude": 40.5, "longitude": 75.0}' \
+     http://localhost:3003/users/1
+###
+curl --request PUT \
+     --header "Content-Type: application/json" \
+     --data '{"firstName": "Edited", "lastName": "User", "birthDate": 946684800, \
+              "bio": "I love coding", "hiddenOnMap": true, "interestedInFriends": true, \
+              "interestedInDating": true, "interestedInBusiness": true, \
+              "interestedInHelp": true, "latitude": 40.5, "longitude": 75.0}' \
+     https://approachable-api.brighamandersen.com/users/1
 
-### 
+
+################################################################################ 
 
 # Delete user by id
 
-curl -X DELETE {{baseUrl}}/users/1
+curl --request DELETE \
+     http://localhost:3003/users/1
+###
+curl --request DELETE \
+     https://approachable-api.brighamandersen.com/users/1
