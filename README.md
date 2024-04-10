@@ -54,8 +54,13 @@ curl --request POST \
 ```
 curl --request POST \
      --header "Content-Type: application/json" \
-     --data '{"birthDate": 946684800, "firstName": "New", "lastName": "User", \
-              "latitude": 40.5, "longitude": 75.0}' \
+     --data '{ \
+              "birthDate": 946684800, \
+              "firstName": "New", \
+              "lastName": "User", \
+              "latitude": 40.5, \
+              "longitude": 75.0 \
+             }' \
      http://localhost:3003/users
 ```
 
@@ -103,7 +108,7 @@ curl --request PUT \
               "lastName": "User", \
               "latitude": 40.5, \
               "longitude": 75.0 \
-            }' \
+             }' \
      http://localhost:3003/users/1
 ```
 
