@@ -17,13 +17,13 @@ async function main() {
   try {
     await prisma.user.create({
       data: {
+        bio: 'Talk to me about Tagalog',
+        birthDate: JAN_1ST_2000,
         firstName: 'Brigham',
         lastName: 'Andersen',
-        birthDate: JAN_1ST_2000,
-        bio: 'Talk to me about Tagalog',
         latitude: 38.90343,
-        longitude: -77.0541,
-        locationLastUpdated: 1706832000
+        locationLastUpdated: 1706832000,
+        longitude: -77.0541
       }
     });
     await prisma.user.create({
@@ -39,35 +39,35 @@ async function main() {
     });
     await prisma.user.create({
       data: {
+        bio: 'I love some good English',
+        birthDate: JAN_1ST_2000,
         firstName: 'Taylor',
         lastName: 'English',
-        birthDate: JAN_1ST_2000,
-        bio: 'I love some good English',
         latitude: 37.33490417052106,
-        longitude: -122.00879734210524,
-        locationLastUpdated: 1710031975
+        locationLastUpdated: 1710031975,
+        longitude: -122.00879734210524
       }
     });
     await prisma.user.create({
       data: {
+        bio: 'The name is Joe Bob, not Jim Bob',
+        birthDate: JAN_1ST_2000,
         firstName: 'Joe',
         lastName: 'Bob',
-        birthDate: JAN_1ST_2000,
-        bio: 'The name is Joe Bob, not Jim Bob',
         latitude: 37.33476720715561,
-        longitude: -122.00837388626947,
-        locationLastUpdated: 1710031975
+        locationLastUpdated: 1710031975,
+        longitude: -122.00837388626947
       }
     });
     await prisma.user.create({
       data: {
+        bio: 'Catch me shmoozing dinoco',
+        birthDate: JAN_1ST_2000,
         firstName: 'Suzy',
         lastName: 'Shmoozy',
-        birthDate: JAN_1ST_2000,
-        bio: 'Catch me shmoozing dinoco',
         latitude: 37.33432494345617,
-        longitude: -122.00865021585727,
-        locationLastUpdated: 1710031975
+        locationLastUpdated: 1710031975,
+        longitude: -122.00865021585727
       }
     });
 
