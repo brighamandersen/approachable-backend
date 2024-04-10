@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
+import { User } from '../types';
 
 const prisma = new PrismaClient();
 
@@ -11,7 +12,7 @@ const login = async (
       userId: number;
     }
   >,
-  res: Response
+  res: Response<User | string>
 ) => {
   const { userId } = req.body;
 
