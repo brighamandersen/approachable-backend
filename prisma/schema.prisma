@@ -11,7 +11,7 @@ model User {
   id                    Int       @id @default(autoincrement())
   firstName             String
   lastName              String
-  birthDate             Int
+  birthDate             Int       // Unix timestamp
   profilePicture        String?
   bio                   String?
   hiddenOnMap           Boolean   @default(false)
@@ -21,5 +21,5 @@ model User {
   interestedInHelp      Boolean   @default(false)
   latitude              Float
   longitude             Float
-  locationLastUpdated   Int
+  locationLastUpdated   Int       // Unix timestamp
 }

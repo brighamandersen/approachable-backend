@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
-import { PrismaClient } from '@prisma/client';
-import { User } from '../types';
+import { PrismaClient, User } from '@prisma/client';
 import { getCurrentTimestamp, isSet } from '../utils';
 
 const prisma = new PrismaClient();

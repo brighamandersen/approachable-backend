@@ -8,9 +8,9 @@
     "dev": "nodemon src/app.ts",
     "db-init": "npx prisma migrate dev --name init",
     "db-migrate": "npx prisma migrate dev",
-    "db-seed": "ts-node prisma/seedDatabase.ts",
     "db-cli": "sqlite3 db.sqlite3",
     "db-gui": "open db.sqlite3",
+    "seed": "ts-node prisma/seed.ts",
     "studio": "npx prisma studio",
     "build": "npx tsc",
     "deploy": "pm2 start pm2.json"
@@ -21,6 +21,7 @@
     "@types/express": "^4.17.21",
     "@types/express-session": "^1.18.0",
     "@types/multer": "^1.4.11",
+    "@types/uuid": "^9.0.8",
     "nodemon": "^3.0.3",
     "prisma": "^5.12.0",
     "ts-node": "^10.9.2",
@@ -33,6 +34,7 @@
     "express": "^4.18.2",
     "express-session": "^1.18.0",
     "multer": "^1.4.5-lts.1",
-    "sqlite3": "^5.1.7"
+    "sqlite3": "^5.1.7",
+    "uuid": "^9.0.1"
   }
 }

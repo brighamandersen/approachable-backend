@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
+import { deleteProfilePictureFile } from '../utils';
 
 const prisma = new PrismaClient();
 
@@ -23,6 +24,8 @@ const deleteUser = async (
       res.status(404).send('User not found');
       return;
     }
+
+    deleteProfilePictureFile(deletedUser?.profilePicture);
 
     res.status(200).send(`User ${userId} deleted successfully`);
   } catch (error) {

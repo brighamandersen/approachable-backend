@@ -5,7 +5,6 @@ import dotenv from 'dotenv';
 import { ONE_WEEK_IN_MILLISECONDS, PROFILE_PICTURES_DIR } from './constants';
 import login from './auth/login';
 import logout from './auth/logout';
-import requireAuth from './auth/requireAuth';
 import linkProfilePicture from './profilePictures/linkProfilePicture';
 import uploadConfig from './profilePictures/uploadConfig';
 import createUser from './users/createUser';
@@ -45,7 +44,6 @@ app.post('/logout', logout);
 app.use('/profile-pictures', express.static(PROFILE_PICTURES_DIR));
 app.post(
   '/profile-pictures',
-  requireAuth,
   uploadConfig.single('profilePicture'),
   linkProfilePicture
 );

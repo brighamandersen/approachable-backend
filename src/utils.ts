@@ -1,4 +1,6 @@
-import { User } from './types';
+import fs from 'fs';
+import { PROFILE_PICTURES_DIR } from './constants';
+import { User } from '@prisma/client';
 
 export function isSet(variable: any): boolean {
   return variable !== undefined && variable !== null;
@@ -43,7 +45,7 @@ export function calculateDistanceBetweenCoordinates(
   return distanceInMeters;
 }
 
-// Filter users within a certain radius
+// Filter by users within a certain radius
 export function filterByUsersWithinRadius(
   users: User[],
   latitude: number,
@@ -66,4 +68,24 @@ export function filterByUsersWithinRadius(
   }
 
   return usersWithinRadius;
+}
+
+// Given a profile picture filename, delete the file.
+// Returns true if a file was found and deleted, false otherwise.
+export function deleteProfilePictureFile(
+  profilePicture?: User['profilePicture']
+): boolean {
+  if (!profilePicture) {
+    return false;
+  }
+
+  const profilePictureFilePath = PROFILE_PICTURES_DIR + profilePicture;
+
+  if (!fs.existsSync(PROFILE_PICTURES_DIR)) {
+    console.error(`File ${profilePictureFilePath} does not exist.`);
+    return false;
+  }
+
+  fs.unlinkSync(profilePictureFilePath); // Delete the file
+  return true;
 }
