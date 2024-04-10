@@ -2,10 +2,14 @@ import { Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
 import fs from 'fs';
 import { PROFILE_PICTURES_DIR } from '../constants';
+import { User } from '../types';
 
 const prisma = new PrismaClient();
 
-const linkProfilePicture = async (req: Request, res: Response) => {
+const linkProfilePicture = async (
+  req: Request,
+  res: Response<User | string>
+) => {
   if (!req.file) {
     res.status(400).send('File is required');
     return;

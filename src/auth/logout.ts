@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-const logout = (req: Request, res: Response) => {
+const logout = (req: Request, res: Response<string>) => {
   if (!req.session?.userId) {
     res.status(401).send('No one was logged in');
     return;
