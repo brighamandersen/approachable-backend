@@ -31,7 +31,7 @@ npm run deploy
 
 > Replace http://localhost:3003 with https://approachable-api.brighamandersen.com to use production endpoints instead!
 
-> Some endpoints require that you provide your session credentials via cookies. To make a new session if you don't have one already, you log in and pass in `-c cookies.txt` which will save session credentials to a cookies.txt file. Then on your remaining requests, use `-b cookies.txt` to use those session credentials.
+> Some endpoints require session credentials which you'll save and send as cookies. For login, employ the `-c` (or `--cookie-jar`) option to save cookies to a file. For endpoints that require auth, employ the `-b` (or `--cookie`) option to send cookies from a file.
 
 ### Log in
 
