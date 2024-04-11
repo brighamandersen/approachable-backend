@@ -33,7 +33,7 @@ npm run deploy
 
 ### Log in
 
-```
+```bash
 curl --request POST \
      --header 'content-type: application/json' \
      --data '{"userId": 1}' \
@@ -43,7 +43,7 @@ curl --request POST \
 
 ### Log out
 
-```
+```bash
 curl --request POST \
      --cookie cookies.txt \
      http://localhost:3003/logout
@@ -51,7 +51,7 @@ curl --request POST \
 
 ### Create a user
 
-```
+```bash
 curl --request POST \
      --header "Content-Type: application/json" \
      --data '{ \
@@ -66,25 +66,25 @@ curl --request POST \
 
 ### Get all users
 
-```
+```bash
 curl http://localhost:3003/users
 ```
 
 ### Get users nearby a certain user
 
-```
+```bash
 curl 'http://localhost:3003/users/nearby?userId=1&radiusInMeters=400'
 ```
 
 ### Get user by id
 
-```
+```bash
 curl http://localhost:3003/users/1
 ```
 
 ### Add a profile picture to a user
 
-```
+```bash
 curl --request POST \
     --form "profilePicture=$HOME/Downloads/temp.jpeg" \
     --form "userId=1" \
@@ -93,7 +93,7 @@ curl --request POST \
 
 ### Update a user by id
 
-```
+```bash
 curl --request PUT \
      --header "Content-Type: application/json" \
      --data '{ \
@@ -114,7 +114,7 @@ curl --request PUT \
 
 ### Delete user by id
 
-```
+```bash
 curl --request DELETE \
      http://localhost:3003/users/1
 ```
