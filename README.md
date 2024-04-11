@@ -91,6 +91,26 @@ curl --request POST \
     http://localhost:3003/profile-pictures
 ```
 
+> How to make this request using an HTML form:
+>
+> ```html
+> <form
+>   id="uploadForm"
+>   action="http://localhost:3003/profile-pictures"
+>   method="post"
+>   enctype="multipart/form-data"
+> >
+>   <input
+>     type="file"
+>     name="profilePicture"
+>     id="profilePicture"
+>     accept="image/*"
+>   />
+>   <input type="text" name="userId" id="userId" />
+>   <button type="submit">Submit</button>
+> </form>
+> ```
+
 ### Update a user by id
 
 ```bash
