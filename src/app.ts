@@ -26,7 +26,7 @@ if (!process.env.SESSION_KEY) {
 const PORT = process.env.PORT || 3003;
 const app = express();
 app.use(express.json());
-app.use(cors({ origin: `*` }));
+app.use(cors({ origin: '*' }));
 app.use(
   session({
     cookie: {
