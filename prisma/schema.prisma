@@ -9,7 +9,7 @@ datasource db {
 
 model User {
   bio                   String?
-  birthDate             Int       // Unix timestamp
+  birthDate             String    // YYYY-MM-DD
   firstName             String
   hiddenOnMap           Boolean   @default(false)
   id                    Int       @id @default(autoincrement())

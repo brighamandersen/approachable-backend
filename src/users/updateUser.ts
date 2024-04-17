@@ -13,7 +13,7 @@ const updateUser = async (
     {},
     {
       bio?: string | null;
-      birthDate?: number;
+      birthDate?: string;
       firstName?: string;
       hiddenOnMap?: boolean;
       interestedInBusiness?: boolean;

@@ -1,8 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import { exec } from 'child_process';
 
-const JAN_1ST_2000 = 946684800;
-
 const prisma = new PrismaClient();
 
 async function main() {
@@ -28,7 +26,7 @@ async function main() {
     await prisma.user.create({
       data: {
         bio: 'Talk to me about Tagalog',
-        birthDate: JAN_1ST_2000,
+        birthDate: '1998-01-01',
         firstName: 'Brigham',
         lastName: 'Andersen',
         latitude: 38.90343,
@@ -40,7 +38,7 @@ async function main() {
       data: {
         firstName: 'Trader',
         lastName: 'Joe',
-        birthDate: JAN_1ST_2000,
+        birthDate: '1985-01-01',
         bio: 'I like cabbage',
         latitude: 38.90412,
         longitude: -77.05303,
@@ -50,7 +48,7 @@ async function main() {
     await prisma.user.create({
       data: {
         bio: 'I love some good English',
-        birthDate: JAN_1ST_2000,
+        birthDate: '2000-01-01',
         firstName: 'Taylor',
         lastName: 'English',
         latitude: 37.33490417052106,
@@ -61,7 +59,7 @@ async function main() {
     await prisma.user.create({
       data: {
         bio: 'The name is Joe Bob, not Jim Bob',
-        birthDate: JAN_1ST_2000,
+        birthDate: '1995-01-01',
         firstName: 'Joe',
         lastName: 'Bob',
         latitude: 37.33476720715561,
@@ -72,7 +70,7 @@ async function main() {
     await prisma.user.create({
       data: {
         bio: 'Catch me shmoozing dinoco',
-        birthDate: JAN_1ST_2000,
+        birthDate: '2004-01-01',
         firstName: 'Suzy',
         lastName: 'Shmoozy',
         latitude: 37.33432494345617,

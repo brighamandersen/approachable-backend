@@ -12,7 +12,7 @@ const createUser = async (
     {},
     {},
     {
-      birthDate: number;
+      birthDate: string;
       firstName: string;
       lastName: string;
       latitude: number;
