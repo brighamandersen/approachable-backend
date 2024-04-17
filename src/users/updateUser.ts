@@ -62,6 +62,17 @@ const updateUser = async (
 
   const didUpdateLocation = latitude || longitude;
 
+  const userToUpdate = await prisma.user.findUnique({
+    where: {
+      id: userId
+    }
+  });
+
+  if (!userToUpdate) {
+    res.status(404).send('User not found');
+    return;
+  }
+
   try {
     const updatedUser = await prisma.user.update({
       where: {
@@ -84,11 +95,6 @@ const updateUser = async (
         longitude
       }
     });
-
-    if (!updatedUser) {
-      res.status(404).send('User not found');
-      return;
-    }
 
     res.send(updatedUser);
   } catch (error) {
