@@ -13,17 +13,23 @@ const deleteUser = async (
 ) => {
   const userId = parseInt(req.params.id);
 
+  const userToDelete = await prisma.user.findUnique({
+    where: {
+      id: userId
+    }
+  });
+
+  if (!userToDelete) {
+    res.status(404).send('User not found');
+    return;
+  }
+
   try {
     const deletedUser = await prisma.user.delete({
       where: {
         id: userId
       }
     });
-
-    if (!deletedUser) {
-      res.status(404).send('User not found');
-      return;
-    }
 
     deleteProfilePictureFile(deletedUser?.profilePicture);
 
