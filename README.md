@@ -59,7 +59,7 @@ curl --request POST \
 curl --request POST \
      --header "Content-Type: application/json" \
      --data '{
-              "birthDate": '2000-12-25',
+              "birthDate": "2000-12-25",
               "firstName": "New",
               "lastName": "User",
               "latitude": 40.5,
@@ -122,7 +122,7 @@ curl --request PUT \
      --header "Content-Type: application/json" \
      --data '{
               "bio": "I love coding",
-              "birthDate": '2000-12-25',
+              "birthDate": "2000-12-25",
               "firstName": "Edited",
               "hiddenOnMap": true,
               "interestedInBusiness": true,
