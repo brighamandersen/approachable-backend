@@ -53,6 +53,43 @@ curl --request POST \
      http://localhost:3003/logout
 ```
 
+### Get a user's profile picture
+
+After finding their `profilePicture` file name from their user, insert it in the query below in place of the example file:
+
+```bash
+curl http://localhost:3003/profile-pictures/8888888e-444f-444f-1212121212tw.jpeg
+```
+
+### Add a profile picture to a user
+
+```bash
+curl --request POST \
+    --form "profilePicture=@$HOME/Downloads/temp.jpeg" \
+    --form "userId=1" \
+    http://localhost:3003/profile-pictures
+```
+
+> How to make this request using an HTML form:
+>
+> ```html
+> <form
+>   id="uploadForm"
+>   action="http://localhost:3003/profile-pictures"
+>   method="post"
+>   enctype="multipart/form-data"
+> >
+>   <input
+>     type="file"
+>     name="profilePicture"
+>     id="profilePicture"
+>     accept="image/*"
+>   />
+>   <input type="text" name="userId" id="userId" />
+>   <button type="submit">Submit</button>
+> </form>
+> ```
+
 ### Create a user
 
 ```bash
@@ -85,35 +122,6 @@ curl 'http://localhost:3003/users/nearby?userId=1&radiusInMeters=400'
 ```bash
 curl http://localhost:3003/users/1
 ```
-
-### Add a profile picture to a user
-
-```bash
-curl --request POST \
-    --form "profilePicture=@$HOME/Downloads/temp.jpeg" \
-    --form "userId=1" \
-    http://localhost:3003/profile-pictures
-```
-
-> How to make this request using an HTML form:
->
-> ```html
-> <form
->   id="uploadForm"
->   action="http://localhost:3003/profile-pictures"
->   method="post"
->   enctype="multipart/form-data"
-> >
->   <input
->     type="file"
->     name="profilePicture"
->     id="profilePicture"
->     accept="image/*"
->   />
->   <input type="text" name="userId" id="userId" />
->   <button type="submit">Submit</button>
-> </form>
-> ```
 
 ### Update a user by id
 
