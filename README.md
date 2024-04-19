@@ -86,7 +86,7 @@ curl http://localhost:3003/users/1
 
 ```bash
 curl --request POST \
-    --form "profilePicture=$HOME/Downloads/temp.jpeg" \
+    --form "profilePicture=@$HOME/Downloads/temp.jpeg" \
     --form "userId=1" \
     http://localhost:3003/profile-pictures
 ```
