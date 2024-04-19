@@ -33,6 +33,8 @@ npm run deploy
 
 ### Log in
 
+🚧 Under maintenance 🚧
+
 ```bash
 curl --request POST \
      --header 'content-type: application/json' \
@@ -42,6 +44,8 @@ curl --request POST \
 ```
 
 ### Log out
+
+🚧 Under maintenance 🚧
 
 ```bash
 curl --request POST \
