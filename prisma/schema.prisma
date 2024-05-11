@@ -11,7 +11,6 @@ model User {
   bio                   String?
   birthDate             String    // YYYY-MM-DD
   firstName             String
-  hiddenOnMap           Boolean   @default(false)
   id                    Int       @id @default(autoincrement())
   interestedInBusiness  Boolean   @default(false)
   interestedInDating    Boolean   @default(false)
@@ -22,4 +21,5 @@ model User {
   locationLastUpdated   Int       // Unix timestamp
   longitude             Float
   profilePicture        String?
+  visible               Boolean   @default(true)
 }

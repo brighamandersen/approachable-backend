@@ -15,7 +15,6 @@ const updateUser = async (
       bio?: string | null;
       birthDate?: string;
       firstName?: string;
-      hiddenOnMap?: boolean;
       interestedInBusiness?: boolean;
       interestedInDating?: boolean;
       interestedInFriends?: boolean;
@@ -23,6 +22,7 @@ const updateUser = async (
       lastName?: string;
       latitude?: number;
       longitude?: number;
+      visible?: boolean;
     }
   >,
   res: Response<User | string>
@@ -33,7 +33,6 @@ const updateUser = async (
     bio,
     birthDate,
     firstName,
-    hiddenOnMap,
     interestedInBusiness,
     interestedInDating,
     interestedInFriends,
@@ -41,20 +40,21 @@ const updateUser = async (
     lastName,
     latitude,
     longitude
+    visible,
   } = req.body;
 
   if (
     !isSet(bio) &&
     !isSet(birthDate) &&
     !isSet(firstName) &&
-    !isSet(hiddenOnMap) &&
     !isSet(interestedInBusiness) &&
     !isSet(interestedInDating) &&
     !isSet(interestedInFriends) &&
     !isSet(interestedInHelp) &&
     !isSet(lastName) &&
     !isSet(latitude) &&
-    !isSet(longitude)
+    !isSet(longitude) &&
+    !isSet(visible)
   ) {
     res.status(400).send('Invalid request body');
     return;
@@ -82,7 +82,6 @@ const updateUser = async (
         bio,
         birthDate,
         firstName,
-        hiddenOnMap,
         interestedInBusiness,
         interestedInDating,
         interestedInFriends,
@@ -90,9 +89,10 @@ const updateUser = async (
         lastName,
         latitude,
         locationLastUpdated: didUpdateLocation
-          ? getCurrentTimestamp()
-          : undefined,
-        longitude
+        ? getCurrentTimestamp()
+        : undefined,
+        longitude,
+        visible,
       }
     });
 

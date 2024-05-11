@@ -132,14 +132,14 @@ curl --request PUT \
               "bio": "I love coding",
               "birthDate": "2000-12-25",
               "firstName": "Edited",
-              "hiddenOnMap": true,
               "interestedInBusiness": true,
               "interestedInDating": true,
               "interestedInFriends": true,
               "interestedInHelp": true,
               "lastName": "User",
               "latitude": 40.5,
-              "longitude": 75.0
+              "longitude": 75.0,
+              "visible": true
              }' \
      http://localhost:3003/users/1
 ```
