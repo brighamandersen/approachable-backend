@@ -10,6 +10,7 @@ datasource db {
 model User {
   bio                   String?
   birthDate             String    // YYYY-MM-DD
+  email                 String    @default("test@gmail.com")
   firstName             String
   id                    Int       @id @default(autoincrement())
   interestedInBusiness  Boolean   @default(false)
