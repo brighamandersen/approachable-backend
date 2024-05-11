@@ -27,6 +27,7 @@ async function main() {
       data: {
         bio: 'Talk to me about Tagalog',
         birthDate: '1998-01-01',
+        email: 'brigham@gmail.com',
         firstName: 'Brigham',
         lastName: 'Andersen',
         latitude: 38.90343,
@@ -36,19 +37,21 @@ async function main() {
     });
     await prisma.user.create({
       data: {
+        bio: 'I like cabbage',
+        birthDate: '1985-01-01',
+        email: 'trader@gmail.com',
         firstName: 'Trader',
         lastName: 'Joe',
-        birthDate: '1985-01-01',
-        bio: 'I like cabbage',
         latitude: 38.90412,
-        longitude: -77.05303,
-        locationLastUpdated: 1710031975
+        locationLastUpdated: 1710031975,
+        longitude: -77.05303
       }
     });
     await prisma.user.create({
       data: {
         bio: 'I love some good English',
         birthDate: '2000-01-01',
+        email: 'taylor@gmail.com',
         firstName: 'Taylor',
         lastName: 'English',
         latitude: 37.33490417052106,
@@ -60,6 +63,7 @@ async function main() {
       data: {
         bio: 'The name is Joe Bob, not Jim Bob',
         birthDate: '1995-01-01',
+        email: 'joe@gmail.com',
         firstName: 'Joe',
         lastName: 'Bob',
         latitude: 37.33476720715561,
@@ -71,6 +75,7 @@ async function main() {
       data: {
         bio: 'Catch me shmoozing dinoco',
         birthDate: '2004-01-01',
+        email: 'suzy@gmail.com',
         firstName: 'Suzy',
         lastName: 'Shmoozy',
         latitude: 37.33432494345617,
