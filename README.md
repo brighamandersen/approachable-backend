@@ -6,7 +6,7 @@ See [approachable-frontend](https://github.com/janksmap/approachable-frontend) r
 
 ## Dev Setup
 
-```
+```bash
 npm i
 npm run db-init
 npm run seed
@@ -15,14 +15,14 @@ npm run dev
 
 ## Production Setup
 
-```
+```bash
 npm i
 npm run db-init
 ```
 
 ## Deployment -> Production Process
 
-```
+```bash
 npm run build
 npm run deploy
 ```
