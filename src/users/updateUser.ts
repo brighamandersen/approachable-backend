@@ -14,6 +14,7 @@ const updateUser = async (
     {
       bio?: string | null;
       birthDate?: string;
+      email?: string;
       firstName?: string;
       interestedInBusiness?: boolean;
       interestedInDating?: boolean;
@@ -32,6 +33,7 @@ const updateUser = async (
   const {
     bio,
     birthDate,
+    email,
     firstName,
     interestedInBusiness,
     interestedInDating,
@@ -39,13 +41,14 @@ const updateUser = async (
     interestedInHelp,
     lastName,
     latitude,
-    longitude
-    visible,
+    longitude,
+    visible
   } = req.body;
 
   if (
     !isSet(bio) &&
     !isSet(birthDate) &&
+    !isSet(email) &&
     !isSet(firstName) &&
     !isSet(interestedInBusiness) &&
     !isSet(interestedInDating) &&
@@ -81,6 +84,7 @@ const updateUser = async (
       data: {
         bio,
         birthDate,
+        email,
         firstName,
         interestedInBusiness,
         interestedInDating,
@@ -89,10 +93,10 @@ const updateUser = async (
         lastName,
         latitude,
         locationLastUpdated: didUpdateLocation
-        ? getCurrentTimestamp()
-        : undefined,
+          ? getCurrentTimestamp()
+          : undefined,
         longitude,
-        visible,
+        visible
       }
     });
 
