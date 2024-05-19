@@ -8,11 +8,11 @@ datasource db {
 }
 
 model User {
+  id                    Int       @id @default(autoincrement())
   bio                   String?
   birthDate             String    // YYYY-MM-DD
   email                 String    @unique
   firstName             String
-  id                    Int       @id @default(autoincrement())
   interestedInBusiness  Boolean   @default(false)
   interestedInDating    Boolean   @default(false)
   interestedInFriends   Boolean   @default(false)
