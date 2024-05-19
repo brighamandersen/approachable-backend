@@ -21,6 +21,7 @@ model User {
   latitude              Float
   locationLastUpdated   Int       // Unix timestamp
   longitude             Float
+  password              String?
   profilePicture        String?
   visible               Boolean   @default(true)
 }
