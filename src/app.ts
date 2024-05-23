@@ -13,6 +13,7 @@ import getUsersNearby from './users/getUsersNearby';
 import updateUser from './users/updateUser';
 import getUserById from './users/getUser';
 import deleteUser from './users/deleteUser';
+import requireAuth from './auth/requireAuth';
 
 dotenv.config();
 
@@ -39,21 +40,22 @@ app.use(
 );
 
 app.post('/login', login);
-app.post('/logout', logout);
+app.post('/logout', requireAuth, logout);
 
-app.use('/profile-pictures', express.static(PROFILE_PICTURES_DIR));
+app.use('/profile-pictures', requireAuth, express.static(PROFILE_PICTURES_DIR));
 app.post(
   '/profile-pictures',
+  requireAuth,
   uploadConfig.single('profilePicture'),
   linkProfilePicture
 );
 
-app.get('/users/nearby', getUsersNearby);
-app.get('/users/:id', getUserById);
-app.put('/users/:id', updateUser);
-app.delete('/users/:id', deleteUser);
-app.get('/users', getAllUsers);
-app.post('/users', createUser);
+app.get('/users/nearby', requireAuth, getUsersNearby);
+app.get('/users/:id', requireAuth, getUserById);
+app.put('/users/:id', requireAuth, updateUser);
+app.delete('/users/:id', requireAuth, deleteUser);
+app.get('/users', requireAuth, getAllUsers);
+app.post('/users', requireAuth, createUser);
 
 app.get('/', (_req: Request, res: Response) => {
   res.send('Welcome to the Approachable API!');
