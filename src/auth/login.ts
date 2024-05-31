@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { PrismaClient, User } from '@prisma/client';
+import { isSet } from '../utils';
 
 const prisma = new PrismaClient();
 
@@ -14,10 +15,9 @@ const login = async (
   >,
   res: Response<User | string>
 ) => {
-  // res.status(501).send('Login is under construction.');
   const { email, password } = req.body;
 
-  if (!email || !password) {
+  if (!isSet(email) || !isSet(password)) {
     res.status(400).send('Email and password are required');
     return;
   }
