@@ -18,12 +18,20 @@ const createUser = async (
       lastName: string;
       latitude: number;
       longitude: number;
+      password: string;
     }
   >,
   res: Response<User | string>
 ) => {
-  const { birthDate, email, firstName, lastName, latitude, longitude } =
-    req.body;
+  const {
+    birthDate,
+    email,
+    firstName,
+    lastName,
+    latitude,
+    longitude,
+    password
+  } = req.body;
 
   if (
     !isSet(birthDate) ||
@@ -31,7 +39,8 @@ const createUser = async (
     !isSet(firstName) ||
     !isSet(lastName) ||
     !isSet(latitude) ||
-    !isSet(longitude)
+    !isSet(longitude) ||
+    !isSet(password)
   ) {
     res.status(400).send('Invalid request body');
     return;
@@ -46,7 +55,8 @@ const createUser = async (
         lastName,
         latitude,
         locationLastUpdated: getCurrentTimestamp(),
-        longitude
+        longitude,
+        password
       }
     });
 
