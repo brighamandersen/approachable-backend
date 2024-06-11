@@ -33,19 +33,19 @@ npm run deploy
 
 ### Log in
 
-🚧 Under maintenance 🚧
-
 ```bash
 curl --request POST \
      --header 'content-type: application/json' \
-     --data '{"userId": 1}' \
+     --data '{
+        "userId": 1,
+        "email": "brigham@gmail.com",
+        "password": "password"
+      }' \
      --cookie-jar cookies.txt \
      http://localhost:3003/login
 ```
 
 ### Log out
-
-🚧 Under maintenance 🚧
 
 ```bash
 curl --request POST \
