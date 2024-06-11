@@ -58,16 +58,18 @@ curl --request POST \
 After finding their `profilePicture` file name from their user, insert it in the query below in place of the example file:
 
 ```bash
-curl http://localhost:3003/profile-pictures/8888888e-444f-444f-1212121212tw.jpeg
+curl --cookie cookies.txt \
+     http://localhost:3003/profile-pictures/8888888e-444f-444f-1212121212tw.jpeg
 ```
 
 ### Add a profile picture to a user
 
 ```bash
 curl --request POST \
-    --form "profilePicture=@$HOME/Downloads/temp.jpeg" \
-    --form "userId=1" \
-    http://localhost:3003/profile-pictures
+     --cookie cookies.txt \
+     --form "profilePicture=@$HOME/Downloads/temp.jpeg" \
+     --form "userId=1" \
+     http://localhost:3003/profile-pictures
 ```
 
 > How to make this request using an HTML form:
@@ -94,9 +96,11 @@ curl --request POST \
 
 ```bash
 curl --request POST \
+     --cookie cookies.txt \
      --header "Content-Type: application/json" \
      --data '{
               "birthDate": "2000-12-25",
+              "email": "newuser@gmail.com",
               "firstName": "New",
               "lastName": "User",
               "latitude": 40.5,
@@ -108,29 +112,34 @@ curl --request POST \
 ### Get all users
 
 ```bash
-curl http://localhost:3003/users
+curl --cookie cookies.txt \
+     http://localhost:3003/users
 ```
 
 ### Get users nearby a certain user
 
 ```bash
-curl 'http://localhost:3003/users/nearby?userId=1&radiusInMeters=400'
+curl --cookie cookies.txt \
+     'http://localhost:3003/users/nearby?userId=1&radiusInMeters=400'
 ```
 
 ### Get user by id
 
 ```bash
-curl http://localhost:3003/users/1
+curl --cookie cookies.txt \
+     http://localhost:3003/users/1
 ```
 
 ### Update a user by id
 
 ```bash
 curl --request PUT \
+     --cookie cookies.txt \
      --header "Content-Type: application/json" \
      --data '{
               "bio": "I love coding",
               "birthDate": "2000-12-25",
+              "email": "editeduser@gmail.com",
               "firstName": "Edited",
               "interestedInBusiness": true,
               "interestedInDating": true,
@@ -148,6 +157,7 @@ curl --request PUT \
 
 ```bash
 curl --request DELETE \
+    --cookie cookies.txt \
      http://localhost:3003/users/1
 ```
 
