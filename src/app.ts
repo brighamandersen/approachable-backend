@@ -14,6 +14,7 @@ import updateUser from './users/updateUser';
 import getUserById from './users/getUser';
 import deleteUser from './users/deleteUser';
 import requireAuth from './auth/requireAuth';
+import './types'; // Must import this so it uses custom express-session SessionData
 
 dotenv.config();
 
