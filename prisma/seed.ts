@@ -25,8 +25,8 @@ async function main() {
   try {
     await prisma.user.create({
       data: {
+        age: 25,
         bio: 'Talk to me about Tagalog',
-        birthDate: '1998-01-01',
         email: 'brigham@gmail.com',
         firstName: 'Brigham',
         lastName: 'Andersen',
@@ -38,8 +38,8 @@ async function main() {
     });
     await prisma.user.create({
       data: {
+        age: 45,
         bio: 'I like cabbage',
-        birthDate: '1985-01-01',
         email: 'trader@gmail.com',
         firstName: 'Trader',
         lastName: 'Joe',
@@ -51,8 +51,8 @@ async function main() {
     });
     await prisma.user.create({
       data: {
+        age: 23,
         bio: 'I love some good English',
-        birthDate: '2000-01-01',
         email: 'taylor@gmail.com',
         firstName: 'Taylor',
         lastName: 'English',
@@ -64,8 +64,8 @@ async function main() {
     });
     await prisma.user.create({
       data: {
+        age: 60,
         bio: 'The name is Joe Bob, not Jim Bob',
-        birthDate: '1995-01-01',
         email: 'joe@gmail.com',
         firstName: 'Joe',
         lastName: 'Bob',
@@ -77,8 +77,8 @@ async function main() {
     });
     await prisma.user.create({
       data: {
+        age: 32,
         bio: 'Catch me shmoozing dinoco',
-        birthDate: '2004-01-01',
         email: 'suzy@gmail.com',
         firstName: 'Suzy',
         lastName: 'Shmoozy',

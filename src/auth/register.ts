@@ -12,7 +12,7 @@ const register = async (
     {},
     {},
     {
-      birthDate: string;
+      age: number;
       email: string;
       firstName: string;
       lastName: string;
@@ -23,18 +23,11 @@ const register = async (
   >,
   res: Response<User | string>
 ) => {
-  const {
-    birthDate,
-    email,
-    firstName,
-    lastName,
-    latitude,
-    longitude,
-    password
-  } = req.body;
+  const { age, email, firstName, lastName, latitude, longitude, password } =
+    req.body;
 
   if (
-    !isSet(birthDate) ||
+    !isSet(age) ||
     !isSet(email) ||
     !isSet(firstName) ||
     !isSet(lastName) ||
@@ -60,7 +53,7 @@ const register = async (
 
     const createdUser = await prisma.user.create({
       data: {
-        birthDate,
+        age,
         email,
         firstName,
         lastName,

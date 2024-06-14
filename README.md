@@ -37,7 +37,7 @@ npm run deploy
 curl --request POST \
      --header 'content-type: application/json' \
      --data '{
-              "birthDate": "2000-12-25",
+              "age": 25,
               "email": "newuser@gmail.com",
               "firstName": "New",
               "lastName": "User",
@@ -115,7 +115,7 @@ curl --request POST \
      --cookie cookies.txt \
      --header "Content-Type: application/json" \
      --data '{
-              "birthDate": "2000-12-25",
+              "age": 25,
               "email": "newuser@gmail.com",
               "firstName": "New",
               "lastName": "User",
@@ -153,8 +153,8 @@ curl --request PUT \
      --cookie cookies.txt \
      --header "Content-Type: application/json" \
      --data '{
+              "age": 25,
               "bio": "I love coding",
-              "birthDate": "2000-12-25",
               "email": "editeduser@gmail.com",
               "firstName": "Edited",
               "interestedInBusiness": true,

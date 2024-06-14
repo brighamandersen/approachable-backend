@@ -12,8 +12,8 @@ const updateUser = async (
     { id: string },
     {},
     {
+      age?: number;
       bio?: string | null;
-      birthDate?: string;
       email?: string;
       firstName?: string;
       interestedInBusiness?: boolean;
@@ -31,8 +31,8 @@ const updateUser = async (
   const userId = parseInt(req.params.id);
 
   const {
+    age,
     bio,
-    birthDate,
     email,
     firstName,
     interestedInBusiness,
@@ -46,8 +46,8 @@ const updateUser = async (
   } = req.body;
 
   if (
+    !isSet(age) &&
     !isSet(bio) &&
-    !isSet(birthDate) &&
     !isSet(email) &&
     !isSet(firstName) &&
     !isSet(interestedInBusiness) &&
@@ -82,8 +82,8 @@ const updateUser = async (
         id: userId
       },
       data: {
+        age,
         bio,
-        birthDate,
         email,
         firstName,
         interestedInBusiness,
