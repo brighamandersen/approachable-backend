@@ -31,13 +31,29 @@ npm run deploy
 
 > Want to test the production endpoints? Just replace [http://localhost:3003](http://localhost:3003) with [https://approachable-api.brighamandersen.com](https://approachable-api.brighamandersen.com) in the CURL commands below.
 
+### Register a user
+
+```bash
+curl --request POST \
+     --header 'content-type: application/json' \
+     --data '{
+              "birthDate": "2000-12-25",
+              "email": "newuser@gmail.com",
+              "firstName": "New",
+              "lastName": "User",
+              "latitude": 40.5,
+              "longitude": 75.0,
+              "password": "password"
+             }' \
+     http://localhost:3003/register
+```
+
 ### Log in
 
 ```bash
 curl --request POST \
      --header 'content-type: application/json' \
      --data '{
-        "userId": 1,
         "email": "brigham@gmail.com",
         "password": "password"
       }' \
@@ -173,3 +189,4 @@ curl --request DELETE \
 - Learned the purpose of middleware. We used the multer middleware for profile picture upload, but then I also had experience firsthand making middleware when we made the custom requireAuth middleware that you can prepend to basically handle checking permissioning before executing services. Middleware is really nice because it's very isolated and easily reusable.
 - Learned how to scale out your express API as it grows. Initially keeping everything in app.ts works just fine, but then as you get more and more endpoints and the size of your file grows to hundreds of lines, you really can benefit by breaking logic out to their own files. Basically the app.ts file will remain the API gateway that will have all the endpoint urls and is responsible for sending off the requests to the right service files (think of Django's urls.py). By doing it like this, you avoid cognitive overload of trying to keep too much in your head at once and can have simple files. Testing is also significantly easier when the files are broken out.
 - I was having issues getting Google Authentication set up, so I decided that for now I'll just do in-house auth and then get Google Auth going later. Google Auth will be convenient for users so we do want it, but for now we just need some sort of auth up and running. I'll follow [Web Dev Simplified's tutorial](https://www.youtube.com/watch?v=Ud5xKCYQTjM) on getting basic auth working, then use express-session to save session credentials and a separate package for hashing/salting passwords. Later on when I go to add Google Auth as well, try to use `google-auth-library` package as it's Google's officially supported one. Also note that I'll want to set it up as OAuth 2.0.
+- I'm realizing I don't like working just on the API side as much, because you don't get to see what the user is actually interacting with. So it's less enjoyable, but it's harder to code in my opinion because you don't exactly know the best way to implement it.

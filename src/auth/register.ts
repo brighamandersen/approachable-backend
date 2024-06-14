@@ -5,9 +5,9 @@ import { getCurrentTimestamp, isSet } from '../utils';
 const prisma = new PrismaClient();
 
 /**
- * Create a user (similar to register, except this one allows admins to create users without validation.)
+ * Register a user (similar to createUser, except this one is for even non-admins to create a user, so there's extra validation.)
  */
-const createUser = async (
+const register = async (
   req: Request<
     {},
     {},
@@ -47,6 +47,17 @@ const createUser = async (
   }
 
   try {
+    const userWithSameEmail = await prisma.user.findUnique({
+      where: {
+        email: email
+      }
+    });
+
+    if (userWithSameEmail) {
+      res.status(409).send('Email already exists');
+      return;
+    }
+
     const createdUser = await prisma.user.create({
       data: {
         birthDate,
@@ -60,6 +71,7 @@ const createUser = async (
       }
     });
 
+    req.session.userId = createdUser.id;
     res.status(201).send(createdUser);
   } catch (error) {
     console.error('Error creating user:', error);
@@ -67,4 +79,4 @@ const createUser = async (
   }
 };
 
-export default createUser;
+export default register;

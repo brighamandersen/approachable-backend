@@ -4,6 +4,9 @@ import { isSet } from '../utils';
 
 const prisma = new PrismaClient();
 
+/**
+ * Log a user in
+ */
 const login = async (
   req: Request<
     {},
@@ -22,7 +25,6 @@ const login = async (
     return;
   }
 
-  // Check if user exists in the database
   try {
     const user = await prisma.user.findUnique({
       where: {

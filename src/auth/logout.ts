@@ -1,5 +1,8 @@
 import { Request, Response } from 'express';
 
+/**
+ * Log a user out
+ */
 const logout = (req: Request, res: Response<string>) => {
   if (!req.session?.userId) {
     res.status(401).send('No one was logged in');

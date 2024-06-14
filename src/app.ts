@@ -3,6 +3,7 @@ import cors from 'cors';
 import session from 'express-session';
 import dotenv from 'dotenv';
 import { ONE_WEEK_IN_MILLISECONDS, PROFILE_PICTURES_DIR } from './constants';
+import register from './auth/register';
 import login from './auth/login';
 import logout from './auth/logout';
 import linkProfilePicture from './profilePictures/linkProfilePicture';
@@ -40,6 +41,7 @@ app.use(
   })
 );
 
+app.post('/register', register);
 app.post('/login', login);
 app.post('/logout', requireAuth, logout);
 
