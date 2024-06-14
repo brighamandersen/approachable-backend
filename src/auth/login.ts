@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { PrismaClient, User } from '@prisma/client';
-import { isSet } from '../utils';
+import { comparePasswords, isSet } from '../utils';
 
 const prisma = new PrismaClient();
 
@@ -37,7 +37,8 @@ const login = async (
       return;
     }
 
-    if (user.password !== password) {
+    const passwordsMatch = await comparePasswords(password, user.password);
+    if (!passwordsMatch) {
       res.status(401).send('Invalid password');
       return;
     }
