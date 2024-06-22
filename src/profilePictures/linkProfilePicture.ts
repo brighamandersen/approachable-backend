@@ -5,16 +5,10 @@ import { deleteProfilePictureFile } from '../utils';
 const prisma = new PrismaClient();
 
 const linkProfilePicture = async (
-  req: Request<
-    {},
-    {},
-    {
-      userId: string; // Comes as a string since it's form data and not the body
-    }
-  >,
+  req: Request<{ userId: string }>, // Comes as a string since it's a query param
   res: Response<User | string>
 ) => {
-  const userId = parseInt(req.body.userId);
+  const userId = parseInt(req.params.userId);
   const uploadedFile = req.file;
 
   if (!uploadedFile) {
@@ -29,6 +23,12 @@ const linkProfilePicture = async (
         id: userId
       }
     });
+
+    if (!user) {
+      res.status(404).send(`User not found with id: ${userId}`);
+      return;
+    }
+
     deleteProfilePictureFile(user?.profilePicture);
 
     // Update the user's profile picture link in the database

@@ -73,19 +73,31 @@ curl --request POST \
 
 After finding their `profilePicture` file name from their user, insert it in the query below in place of the example file:
 
-```bash
+<!-- ```bash
 curl --cookie cookies.txt \
      http://localhost:3003/profile-pictures/8888888e-444f-444f-1212121212tw.jpeg
+``` -->
+
+```bash
+curl --cookie cookies.txt \
+     http://localhost:3003/users/1/profile-picture/8888888e-444f-444f-1212121212tw.jpeg
 ```
 
 ### Add a profile picture to a user
 
-```bash
+<!-- ```bash
 curl --request POST \
      --cookie cookies.txt \
      --form "profilePicture=@$HOME/Downloads/temp.jpeg" \
      --form "userId=1" \
      http://localhost:3003/profile-pictures
+``` -->
+
+```bash
+curl --request POST \
+     --cookie cookies.txt \
+     --form "profilePicture=@$HOME/Downloads/temp.jpeg" \
+     http://localhost:3003/users/1/profile-picture
 ```
 
 > How to make this request using an HTML form:

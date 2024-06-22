@@ -9,4 +9,4 @@ dist
 *.sqlite-journal
 pm2.log
 cookies.txt
-uploads/
+public/profile-pictures/

@@ -1,5 +1,7 @@
 import express, { Request, Response } from 'express';
 import cors from 'cors';
+import fs from 'fs';
+import path from 'path';
 import session from 'express-session';
 import dotenv from 'dotenv';
 import { ONE_WEEK_IN_MILLISECONDS, PROFILE_PICTURES_DIR } from './constants';
@@ -16,6 +18,8 @@ import getUserById from './users/getUser';
 import deleteUser from './users/deleteUser';
 import requireAuth from './auth/requireAuth';
 import './types'; // Must import this so it uses custom express-session SessionData
+import { PrismaClient } from '@prisma/client';
+import getUserProfilePicture from './getUserProfilePicture';
 
 dotenv.config();
 
@@ -41,13 +45,16 @@ app.use(
   })
 );
 
+const prisma = new PrismaClient();
+
 app.post('/register', register);
 app.post('/login', login);
 app.post('/logout', requireAuth, logout);
 
-app.use('/profile-pictures', requireAuth, express.static(PROFILE_PICTURES_DIR));
+app.get('/users/:userId/profile-picture', requireAuth, getUserProfilePicture);
+
 app.post(
-  '/profile-pictures',
+  '/users/:userId/profile-picture',
   requireAuth,
   uploadConfig.single('profilePicture'),
   linkProfilePicture
