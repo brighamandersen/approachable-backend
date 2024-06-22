@@ -78,14 +78,6 @@ curl --cookie cookies.txt \
 
 ### Add a profile picture to a user
 
-<!-- ```bash
-curl --request POST \
-     --cookie cookies.txt \
-     --form "profilePicture=@$HOME/Downloads/temp.jpeg" \
-     --form "userId=1" \
-     http://localhost:3003/profile-pictures
-``` -->
-
 ```bash
 curl --request POST \
      --cookie cookies.txt \
@@ -98,7 +90,7 @@ curl --request POST \
 > ```html
 > <form
 >   id="uploadForm"
->   action="http://localhost:3003/profile-pictures"
+>   action="http://localhost:3003/{userId}/profile-pictures"
 >   method="post"
 >   enctype="multipart/form-data"
 > >
@@ -108,7 +100,6 @@ curl --request POST \
 >     id="profilePicture"
 >     accept="image/*"
 >   />
->   <input type="text" name="userId" id="userId" />
 >   <button type="submit">Submit</button>
 > </form>
 > ```
