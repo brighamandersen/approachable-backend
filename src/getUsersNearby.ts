@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { PrismaClient, User } from '@prisma/client';
-import { filterByUsersWithinRadius, isSet } from '../utils';
+import { filterByUsersWithinRadius, isSet } from './utils';
 
 const prisma = new PrismaClient();
 

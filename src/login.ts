@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { PrismaClient, User } from '@prisma/client';
-import { comparePasswords, isSet } from '../utils';
+import { comparePasswords, isSet } from './utils';
 
 const prisma = new PrismaClient();
 

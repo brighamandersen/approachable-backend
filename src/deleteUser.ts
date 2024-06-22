@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
-import { deleteProfilePictureFile } from '../utils';
+import { deleteProfilePictureFile } from './utils';
 
 const prisma = new PrismaClient();
 

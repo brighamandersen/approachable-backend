@@ -1,26 +1,23 @@
 import express, { Request, Response } from 'express';
 import cors from 'cors';
-import fs from 'fs';
-import path from 'path';
 import session from 'express-session';
 import dotenv from 'dotenv';
-import { ONE_WEEK_IN_MILLISECONDS, PROFILE_PICTURES_DIR } from './constants';
-import register from './auth/register';
-import login from './auth/login';
-import logout from './auth/logout';
+import { ONE_WEEK_IN_MILLISECONDS } from './constants';
+import register from './register';
+import login from './login';
+import logout from './logout';
 import linkUserProfilePicture, {
   profilePictureUploadConfig
 } from './linkUserProfilePicture';
-import createUser from './users/createUser';
-import getAllUsers from './users/getAllUsers';
-import getUsersNearby from './users/getUsersNearby';
-import updateUser from './users/updateUser';
-import getUserById from './users/getUser';
-import deleteUser from './users/deleteUser';
-import requireAuth from './auth/requireAuth';
-import './types'; // Must import this so it uses custom express-session SessionData
-import { PrismaClient } from '@prisma/client';
 import getUserProfilePicture from './getUserProfilePicture';
+import createUser from './createUser';
+import getAllUsers from './getAllUsers';
+import getUsersNearby from './getUsersNearby';
+import updateUser from './updateUser';
+import getUserById from './getUser';
+import deleteUser from './deleteUser';
+import requireAuth from './requireAuth';
+import './types'; // Must import this so it uses custom express-session SessionData
 
 dotenv.config();
 

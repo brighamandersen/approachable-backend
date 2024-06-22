@@ -1,13 +1,13 @@
 import { Request, Response } from 'express';
 import { PrismaClient, User } from '@prisma/client';
-import { getCurrentTimestamp, hashPassword, isSet } from '../utils';
+import { getCurrentTimestamp, hashPassword, isSet } from './utils';
 
 const prisma = new PrismaClient();
 
 /**
- * Register a user (similar to createUser, except this one is for even non-admins to create a user, so there's extra validation.)
+ * Create a user (similar to register, except this one allows admins to create users without validation.)
  */
-const register = async (
+const createUser = async (
   req: Request<
     {},
     {},
@@ -40,17 +40,6 @@ const register = async (
   }
 
   try {
-    const userWithSameEmail = await prisma.user.findUnique({
-      where: {
-        email: email
-      }
-    });
-
-    if (userWithSameEmail) {
-      res.status(409).send('Email already exists');
-      return;
-    }
-
     const createdUser = await prisma.user.create({
       data: {
         age,
@@ -64,7 +53,6 @@ const register = async (
       }
     });
 
-    req.session.userId = createdUser.id;
     res.status(201).send(createdUser);
   } catch (error) {
     console.error('Error creating user:', error);
@@ -72,4 +60,4 @@ const register = async (
   }
 };
 
-export default register;
+export default createUser;
