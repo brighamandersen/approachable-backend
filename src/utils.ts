@@ -102,7 +102,7 @@ export async function hashPassword(password: string): Promise<string> {
   return hashedAndSaltedPassword;
 }
 
-export async function comparePasswords(
+export async function compareRawToHashedPassword(
   password: string,
   hashedPassword: string
 ): Promise<boolean> {
