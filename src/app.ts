@@ -8,8 +8,9 @@ import { ONE_WEEK_IN_MILLISECONDS, PROFILE_PICTURES_DIR } from './constants';
 import register from './auth/register';
 import login from './auth/login';
 import logout from './auth/logout';
-import linkProfilePicture from './profilePictures/linkProfilePicture';
-import uploadConfig from './profilePictures/uploadConfig';
+import linkUserProfilePicture, {
+  profilePictureUploadConfig
+} from './linkUserProfilePicture';
 import createUser from './users/createUser';
 import getAllUsers from './users/getAllUsers';
 import getUsersNearby from './users/getUsersNearby';
@@ -45,19 +46,16 @@ app.use(
   })
 );
 
-const prisma = new PrismaClient();
-
 app.post('/register', register);
 app.post('/login', login);
 app.post('/logout', requireAuth, logout);
 
 app.get('/users/:userId/profile-picture', requireAuth, getUserProfilePicture);
-
 app.post(
   '/users/:userId/profile-picture',
   requireAuth,
-  uploadConfig.single('profilePicture'),
-  linkProfilePicture
+  profilePictureUploadConfig.single('profilePicture'),
+  linkUserProfilePicture
 );
 
 app.get('/users/nearby', requireAuth, getUsersNearby);

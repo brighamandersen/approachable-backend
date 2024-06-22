@@ -71,16 +71,9 @@ curl --request POST \
 
 ### Get a user's profile picture
 
-After finding their `profilePicture` file name from their user, insert it in the query below in place of the example file:
-
-<!-- ```bash
-curl --cookie cookies.txt \
-     http://localhost:3003/profile-pictures/8888888e-444f-444f-1212121212tw.jpeg
-``` -->
-
 ```bash
 curl --cookie cookies.txt \
-     http://localhost:3003/users/1/profile-picture/8888888e-444f-444f-1212121212tw.jpeg
+     http://localhost:3003/users/1/profile-picture
 ```
 
 ### Add a profile picture to a user

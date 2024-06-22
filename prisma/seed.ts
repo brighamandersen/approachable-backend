@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 
 async function main() {
   // Clear out profile pictures
-  exec('rm -f uploads/profile-pictures/*', (err, _stdout, stderr) => {
+  exec('rm -f public/profile-pictures/*', (err, _stdout, stderr) => {
     if (err || stderr) {
       console.error('Error deleting files:', err, stderr);
       return;
