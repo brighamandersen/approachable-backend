@@ -76,7 +76,7 @@ curl --cookie cookies.txt \
      http://localhost:3003/users/1/profile-picture
 ```
 
-### Add a profile picture to a user
+### Add/edit a profile picture for a user
 
 ```bash
 curl --request POST \
