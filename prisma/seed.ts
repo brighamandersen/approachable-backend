@@ -14,16 +14,9 @@ async function main() {
     console.log('Files deleted successfully');
   });
 
-  // Clear user table
   try {
     await prisma.user.deleteMany({});
-    console.log('Database cleared successfully');
-  } catch (error) {
-    console.error('Error clearing database:', error);
-  }
 
-  // Populate user table
-  try {
     await prisma.user.create({
       data: {
         age: 25,
@@ -90,9 +83,9 @@ async function main() {
       }
     });
 
-    console.log('Data inserted successfully');
+    console.log('Database seeded successfully');
   } catch (error) {
-    console.error('Error inserting data:', error);
+    console.error('Error seeding database:', error);
   } finally {
     await prisma.$disconnect();
   }
