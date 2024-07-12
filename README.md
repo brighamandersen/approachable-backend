@@ -8,8 +8,8 @@ See [approachable-frontend](https://github.com/janksmap/approachable-frontend) r
 
 ```bash
 npm i
-npm run db-init
-npm run seed
+npm run db:init
+npm run db:seed
 npm run dev
 ```
 
@@ -17,7 +17,7 @@ npm run dev
 
 ```bash
 npm i
-npm run db-init
+npm run db:init
 ```
 
 ## Deployment -> Production Process
