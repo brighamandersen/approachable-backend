@@ -186,3 +186,12 @@ curl --request DELETE \
 - Learned how to scale out your express API as it grows. Initially keeping everything in app.ts works just fine, but then as you get more and more endpoints and the size of your file grows to hundreds of lines, you really can benefit by breaking logic out to their own files. Basically the app.ts file will remain the API gateway that will have all the endpoint urls and is responsible for sending off the requests to the right service files (think of Django's urls.py). By doing it like this, you avoid cognitive overload of trying to keep too much in your head at once and can have simple files. Testing is also significantly easier when the files are broken out.
 - I was having issues getting Google Authentication set up, so I decided that for now I'll just do in-house auth and then get Google Auth going later. Google Auth will be convenient for users so we do want it, but for now we just need some sort of auth up and running. I'll follow [Web Dev Simplified's tutorial](https://www.youtube.com/watch?v=Ud5xKCYQTjM) on getting basic auth working, then use express-session to save session credentials and a separate package for hashing/salting passwords. Later on when I go to add Google Auth as well, try to use `google-auth-library` package as it's Google's officially supported one. Also note that I'll want to set it up as OAuth 2.0.
 - I'm realizing I don't like working just on the API side as much, because you don't get to see what the user is actually interacting with. So it's less enjoyable, but it's harder to code in my opinion because you don't exactly know the best way to implement it.
+
+## TODO
+
+- Adjust motives / goals / priorities / intent (why i'm here on the app)
+- Add hobbies / interests (GAMING, READING, SINGING - build on common ground)
+- Mass update everyone's locations (look into sockets and subscriptions)
+- Make PDF of usage
+- EVENTUALLY - Add google authentication in addition to normal auth
+- EVENTUALLY - Android app (Probably just wait on this one until iOS gets traction unless I just want to take a stab at it.)
