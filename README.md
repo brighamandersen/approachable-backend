@@ -1,6 +1,6 @@
-# approachable-backend
+# Approachable Backend
 
-Project for Brigham Andersen and Taylor English
+Our generation struggles with social interaction, so my friend Taylor English and I set out to help improve that. We created **Approachable**, an app that you or others in your vicinty indicate you're "approachable" and want to meet new people. The app allows you to see what topics or hobbies you have in common with those around you so you are immediately equipped with a killer conversation starter and can approach once-called "strangers" with confidence! 
 
 See [approachable-frontend](https://github.com/janksmap/approachable-frontend) repo
 
