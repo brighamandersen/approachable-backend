@@ -1,5 +1,7 @@
 # Approachable Backend
 
+![Approachable App Icon](README-approachable-app-icon.png)
+
 My friend Taylor English and I, both entrepreneurial-minded Computer Science grads, created Approachable—an app designed to help people connect more easily in public spaces like libraries, cafes, or networking events. Our generation often struggles with social interaction, so we wanted to make it simpler to meet new people by showing you who nearby shares your interests and talents, giving you instant conversation starters. You can also see reminders of people’s names and past conversations to build stronger connections over time. For this project, Taylor focused on the iOS front end in Swift, while I built the backend with Node.js (using Express.js, SQLite, and Prisma). It’s not fully complete, but feel free to explore the repository to see my backend implementation so far.
 
 See [approachable-frontend](https://github.com/janksmap/approachable-frontend) repo
