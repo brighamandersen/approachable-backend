@@ -22,11 +22,11 @@ npm i
 npm run db:init
 ```
 
-## Deployment -> Production Process
+## Deploying to Production
 
 ```bash
-npm run build
-npm run deploy
+cd path/to/repo
+./deploy/deploy.sh
 ```
 
 ## API Usage
