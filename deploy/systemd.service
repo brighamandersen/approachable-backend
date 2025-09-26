@@ -1,0 +1,15 @@
+[Unit]
+Description=approachable-api
+After=network.target
+
+[Service]
+User=www-data
+Group=www-data
+WorkingDirectory=/home/brig/code/approachable-backend
+ExecStart=/usr/bin/node /home/brig/code/approachable-backend/dist/app.js
+Restart=always
+RestartSec=5
+Environment="PATH=/usr/bin:/usr/local/bin:$PATH"
+
+[Install]
+WantedBy=multi-user.target

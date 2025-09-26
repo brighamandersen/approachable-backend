@@ -1,8 +1,0 @@
-{
-  "apps": [
-      {
-      "name": "approachable-api",
-      "script": "dist/app.js"
-    }
-  ]
-}
