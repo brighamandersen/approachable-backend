@@ -28,7 +28,7 @@ if (!process.env.SESSION_KEY) {
   process.exit(1);
 }
 
-const PORT = process.env.PORT || 3003;
+const PORT = process.env.PORT || 3002;
 const app = express();
 app.use(express.json());
 app.use(cors({ origin: '*' }));
