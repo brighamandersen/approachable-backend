@@ -6,7 +6,7 @@ After=network.target
 User=brig
 Group=brig
 WorkingDirectory=/home/brig/code/approachable-backend
-ExecStart=/home/brig/.nvm/versions/node/v20.11.0/bin/node dist/app.js
+ExecStart=/home/brig/.nvm/versions/node/v20.11.0/bin/node /home/brig/code/approachable-backend/dist/app.js
 Restart=always
 RestartSec=5
 
